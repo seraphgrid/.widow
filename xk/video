@@ -1,33 +1,47 @@
-# [labyrinth]
+alt + o ; w
+ labyrinth -v
 
-alt + w ; i
-# config
- labyrinth -I
+alt + w
+ labyrinth -v
 
-alt + w ; a
-# audio
- labyrinth -a
+alt + o ; Escape
+ labyrinth -v
+
+# res.conf
+alt + o ; shift + space
+ labyrinth -V
 
 alt + Tab
 # normal
  labyrinth -v
 
+Super_L
+ labyrinth -v
+
+# [nav]
+
+alt + o ; e
+ rofi -show window -kb-element-prev 'k' -kb-element-next 'j' -kb-accept-entry 'o'
+
+alt + o ; semicolon
+ rofi -show drun
+
 # [wm]
 
-alt + w ; backslash ; q 
+alt + o ; Q 
  dwmc quit
 
-alt + w ; L  
+alt + o ; L
  slock 
 
 alt + {j,k}
  dwmc focusstack {+,-}1
  
-alt + w ; {j,k}
-  dwmc focusstack {+,-}1
+alt + o ; {j,k}
+ dwmc focusstack {+,-}1
  
-# alt + w ; {h,l}
-#  dwmc setmfact {-,+}0.05
+# alt + o ; {h,l}
+#  dwmc setmfact {-,+}1.1
  
 # shift + space ; {u,i}
 #  dwmc setcfact {-,+}0.85
@@ -35,52 +49,103 @@ alt + w ; {j,k}
 # shift + space ; o 
 #  dwmc setcfact
 
-# alt + w ; c 
-#  dwmc setlayoutex {0,1}
-# 
-alt + w ; b 
+alt + o ; ctrl + grave 
+ dwmc setlayoutex {8,0}
+ 
+alt + o ; F11 
  dwmc togglebar
  
-alt + w ; {1-9}
- dwmc view {0-9}
+alt + o ; {1-9} 
+ dwmc viewex {0-8}
 
-alt + shift + 2 ; {1-9}
- dwmc tagex {0-9}
- 
-alt + w ; z
+alt + o ; {g ; g,G}
+ dwmc viewex {0,8}
+
+alt + o ; space ; {1-9}
+ dwmc tagex {0-8}
+
+alt + o ; space ; {g ; g,G}
+ dwmc tagex {0,8}
+
+alt + o ; shift + grave
  dwmc togglemax
 
-alt + e
+alt + o ; c ; w
+ dwmc killclient; rofi -show drun
+
+alt + o ; ctrl + n 
+ dwmc nametag
+
+alt + o ; space ; {j,k}
+ dwmc rotatestack {+,-}1
+
+alt + o ; ctrl + {j,k}
+ dwmc setcfact {+,-}0.45
+
+alt + o ; {J,K}
+ dwmc {pushdown,pushup}
+
+alt + o ; equal
+ dwmc setcfact 
+
+alt + o ; {l,h}
+ dwmc setmfact {+,-}0.18
+
+alt + f
  hints
 
-alt + w ; v 
+alt + o ; f
+ hints
+
+alt + o ; r 
  hints -m scroll
 
-alt + w ; F 
+alt + o ; V 
  warpd --hint
 
-alt + w ; r 
+alt + o ; v 
  warpd --normal
 
-alt + w ; z ; z
+alt + o ; z 
  dwmc zoom
 
-alt + w ; Z
- dwmc zoom
+alt + o ; y
+ xdotool getactivewindow key "ctrl+c"
 
-alt + w ; q 
+alt + o ; Y
+ xdotool getactivewindow key "ctrl+C"
+
+alt + o ; p
+ xdotool getactivewindow key "ctrl+v"
+ 
+alt + o ; q 
  dwmc killclient
 
-alt + w ; {n,N}  
+alt + q ; q 
+ dwmc killclient
+
+alt + o ; {n,N}  
  dunstctl {close-all,history-pop}
 
-# [ss]
+# [tools]
 
-Print
- scrot -s '%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/Screenshots/' 
+Print ; i
+ labyrtool -ss
 
-shift + Print
- scrot -f '%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/Screenshots/'
+Print ; o
+ labyrtool -sf
+
+Print ; r
+ labyrtool -sv
+
+Print ; a
+ labyrtool -ar
+
+ctrl + Print
+ labyrtool -vd
+
+alt + o ; shift + 4
+ labyrtool -t
 
 # [nav]
 
@@ -109,9 +174,6 @@ alt + q ; p
 alt + q ; v
  mpv
 
-ctrl + space
- st
- 
 alt + q ; colon
  python ~/cmdlaunch.py "" 
 
@@ -119,8 +181,8 @@ alt + q ; {w,W}
  {qutebrowser,torbrowser-launcher} 
 
 alt + q ; y
- st -e "yt-dlp -f 'bestvideo+bestaudio/best' -o '~/Videos/rnd/%(title)s.%(ext)s' (xsel -b)"
-  
+ labyrtool -vd
+ 
 alt + q ; p 
  nomacs
 

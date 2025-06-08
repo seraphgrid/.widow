@@ -43,7 +43,6 @@ alt + w ; {j,k}
 
 alt + {j,k}
  dwmc focusstack {+,-}1
-
 alt + w ; {h,l}
  dwmc setmfact {-,+}0.05
 

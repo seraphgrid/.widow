@@ -26,7 +26,7 @@ alt + o ; backslash ; v
 alt + o ; e
  rofi -show window -kb-element-prev 'k' -kb-element-next 'j' -kb-accept-entry 'o'
 
-alt + o ; i
+alt + o ; semicolon
  rofi -show drun
 
 # [wm]
@@ -145,6 +145,9 @@ Print ; r
 Print ; a
  labyrtool -ar
 
+Print ; u
+ spmenu -d
+
 alt + o ; shift + 4
  labyrtool -t
 
@@ -196,11 +199,14 @@ alt + o ; backslash ; colon
 alt + q ; d 
  python ~/cmdlaunch.py "python ~/t/t.py --task-dir ~/tasks --list tasks -d" 
 
+alt + o ; t 
+ spmenu -m
+
 # [system]
 
 
-alt + o ; backslash ; P
- labyrtool -E htop
+alt + o ; c ; p
+ labyrtool -E glances
 
 alt + o ; backslash ; f 
  labyrtool -E "ranger"
@@ -214,20 +220,11 @@ alt + o ; a ; d
 alt + o ; a ; a
  labyrtool -E "pulsemixer"
 
+alt + o ; a ; y
+ labyrtool -ad
+
 alt + o ; backslash ; m
  labyrtool -E "cmus"
-
-alt + o ; n ; v ; c
- labyrtool -E "mullvad connect"
-
-alt + o ; n ; v ; d
- labyrtool -E "mullvad disconnect"
-
-alt + o ; n ; v ; r
- labyrtool -E "mullvad reconnect"
-
-alt + o ; n ; v ; d
- labyrtool -E "mullvad disconnect"
 
 alt + o ; {F7,F8}
  brightnessctl set 55%{-,+}

@@ -17,6 +17,9 @@ alt + o ; v
 alt + o ; shift + space
  labyrinth -a
 
+alt + w
+ labyrinth -v
+
 # [wm]
 
 alt + o ; Q 
@@ -120,6 +123,10 @@ alt + q ; M ; {r,R}
 alt + q ; {space} 
  cmus-remote {-u,-p}
 
+alt + q ; {equal} 
+ cmus-remote -v {20,90}
+
+
 # [tools] 
 
 Print ; i
@@ -133,6 +140,9 @@ Print ; r
 
 Print ; a
  labyrtool -ar
+
+Print ; u
+ spmenu -d
 
 alt + o ; shift + 4
  labyrtool -t

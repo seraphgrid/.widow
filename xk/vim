@@ -1,4 +1,6 @@
 # labyrinth is a modal interface overlay for widow. 
+# need ability to quickly send any one key or macro before returning to normal
+
 
 # [labyrinth]
 
@@ -210,6 +212,18 @@ comma
 
 # [applications] 
 
+M
+ labyrtool -E cmus
+
+backslash ; m
+ labyrtool -E neomutt
+
+backslash ; p
+ labyrtool -E glances
+
+backslash ; k
+ keepassxc
+
 Print ; i
  labyrtool -ss
 
@@ -218,6 +232,12 @@ Print ; o
 
 Print ; v
  vokoscreenNG
+
+Print ; u
+ spmenu -d 
+
+Print ; w
+ spmenu -D
 
 shift + 4
  labyrtool -t
@@ -228,6 +248,9 @@ shift + 4
 backslash ; w
  nitrogen
 
+backslash ; f
+ labyrtool -E ranger
+
 backslash ; semicolon
  labyrtool -E "$(xsel -b)"
 
@@ -235,7 +258,7 @@ backslash ; comma
  labyrtool -e "$HOME/.widow/.src/config.h"
 
 backslash ; period
- labyrtool -E "cd $HOME/.widow/.src && make -j4 && sudo make clean install"
+ xterm -e "cd $HOME/.widow/.src && make -j4 && sudo make clean install"
 
 backslash ; e 
  labyrtool -e
@@ -246,11 +269,14 @@ backslash ; v
 backslash ; g
  labyrtool -g
 
-backslash ; P
- labyrtool -E glances
+o 
+ labyrinth -T
 
-o
- labyrinth -I
+T
+ spmenu -m
+
+backslash ; T
+ spmenu -M
 
 backslash ; b
  labyrinth -I && labyrtool -b 
@@ -258,19 +284,31 @@ backslash ; b
 backslash ; m
  labyrtool -m && labyrinth -I
 
-backslash ; colon
+semicolon
  rofi -show drun
 
 backslash ; v
  vokoscreenNG
 
+backslash ; c
+ equibop
+
 backslash ; k
  screenkey
+
+y
+ xsel -op | xsel -b
+
+p
+ xdotool getactivewindow key --window "%@" ctrl+v
 
 # need actual marking functionality.
 # $ometing need$ to allow u to mark a currently open file into the nromal mode config for being launched with grave then the letter.
 
 # [bookmarks]
+
+grave + c
+ rog-control-center
 
 grave + period
  labyrtool -E "rm -rf ~/.local/share/recently-used.xbel"
