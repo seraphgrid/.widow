@@ -1,0 +1,280 @@
+# labyrinth is a modal interface overlay for widow. 
+
+# [labyrinth]
+
+shift + space
+ labyrinth -v 
+
+Super_L ; v
+ labyrinth -V
+
+a
+ labyrinth -a
+
+Super_L ; n 
+ labyrinth -n 
+
+Super_L ; y
+ labyrinth -s 
+
+Super_L ; t
+ labyrinth -t
+
+Super_L ; x
+ labyrinth -H 
+
+Super_L ; w 
+ labyrinth -I 
+
+i 
+ labyrinth -i 
+
+I 
+ labyrinth -I 
+
+w 
+ labyrinth -I 
+
+Super_L ; c
+ labyrinth -c 
+
+shift + space
+ labyrinth -v 
+
+# [Super_R]
+
+Super_R ; v
+ sh labyrinth -V
+
+space ; a 
+ sh labyrinth -a
+
+space ; n 
+ sh labyrinth -n 
+
+Super_R ; y
+ sh labyrinth -s 
+
+Super_R ; t
+ sh labyrinth -t
+
+Super_R ; x
+ sh labyrinth -H 
+
+Super_R ; w 
+ sh labyrinth -I 
+
+i 
+ sh labyrinth -i 
+
+I 
+ sh labyrinth -I 
+
+w 
+ sh labyrinth -I 
+
+Super_R ; c
+ sh labyrinth -c 
+
+# [wm]
+
+L 
+ slock
+
+ctrl + l 
+ slock
+
+ctrl + grave
+ dwmc setlayoutex {8,0}
+
+space ; {1-9} 
+ dwmc tagex {0-8}
+
+space ; {g ; g,G}
+ dwmc tagex {0,8}
+
+{ctrl + a, ctrl + x}
+ dwmc incnmaster {+,-}1
+
+{g ; g,G}
+ dwmc viewex {0,8}
+
+ctrl + w ; n 
+ dwmc nametag
+
+ctrl + w ; shift + 4 
+ dwmc togglesticky
+
+shift + grave
+ dwmc togglemax
+
+F11
+ dwmc togglebar
+
+{1-9} 
+ dwmc viewex {0-8}
+
+{j,k}
+ dwmc focusstack {+,-}1
+
+shift + F8
+ redshift {-O 2444,-x}
+
+ctrl + w ; {j,k}
+ dwmc rotatestack 1{+,-}
+
+{J,K}
+ dwmc {pushdown,pushup}
+
+ctrl + {j,k}
+ dwmc setcfact {+,-}0.45
+
+equal
+ dwmc setcfact 
+
+{l,h}
+ dwmc setmfact {+,-}0.05
+
+z
+ dwmc zoom
+
+W 
+ dwmc togglebar
+
+c ; f
+ labyrinth -i && python ~/cmdlaunch.py "pkill -f" && python ~/cmdlaunch.py -n ""
+
+c ; w
+ dwmc killclient; \
+ spmenu; \
+ labyrinth -I
+
+n
+ dunstctl close-all
+
+N 
+ dunstctl history-pop
+
+# kill windows. pleae. 
+
+q 
+ dwmc killclient
+
+Q
+ dwmc quit
+
+d 
+ labyrinth -i && python ~/cmdlaunch.py -n "pkill -f" && labyrinth -v 
+
+x
+ xkill
+
+R
+ reboot
+
+S
+ shutdown now
+
+# warpd
+
+f
+ hints 
+
+r
+ hints -m scroll
+
+V
+ warpd --hint
+
+v
+ warpd --normal
+
+# [menus]
+
+{e,slash}
+ rofi -show window -kb-element-prev 'k' -kb-element-next 'j' -kb-accept-entry 'o'
+
+colon
+ spmenu
+
+backslash ; a
+ pavucontrol
+
+exclam
+  labyrinth -i && python ~/cmdlaunch.py -n "" && labyrinth -v
+
+# [config] 
+
+comma
+ labyrinth -e; labyrinth -I
+
+# [applications] 
+
+Print ; i
+ labyrtool -ss
+
+Print ; o
+ labyrtool -sf
+
+Print ; v
+ vokoscreenNG
+
+shift + 4
+ labyrtool -t
+
+{F7,F8}
+ brightnessctl set 20%{-,+}
+
+backslash ; w
+ nitrogen
+
+backslash ; semicolon
+ labyrtool -E "$(xsel -b)"
+
+backslash ; comma
+ labyrtool -e "$HOME/.widow/.src/config.h"
+
+backslash ; period
+ labyrtool -E "cd $HOME/.widow/.src && make -j4 && sudo make clean install"
+
+backslash ; e 
+ labyrtool -e
+
+backslash ; v 
+ labyrtool -E "cmatrix -C white"
+
+backslash ; g
+ labyrtool -g
+
+backslash ; P
+ labyrtool -E glances
+
+o
+ labyrinth -I
+
+backslash ; b
+ labyrinth -I && labyrtool -b 
+
+backslash ; m
+ labyrtool -m && labyrinth -I
+
+backslash ; colon
+ rofi -show drun
+
+backslash ; v
+ vokoscreenNG
+
+backslash ; k
+ screenkey
+
+# need actual marking functionality.
+# $ometing need$ to allow u to mark a currently open file into the nromal mode config for being launched with grave then the letter.
+
+# [bookmarks]
+
+grave + period
+ labyrtool -E "rm -rf ~/.local/share/recently-used.xbel"
+
+grave + p
+ labyrtool -E "sudo pacman -Syu"
+

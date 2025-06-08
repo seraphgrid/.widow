@@ -1,0 +1,41 @@
+#!/bin/bash
+
+TERMINAL="alacritty"
+VICOL="~/Videos/rnd/"
+MUCOL="~/Music/collection/rnd/"
+
+# Define options for dmenu
+options="AUD\nVID"
+
+# Use dmenu to get user selection
+choice=$(echo -e "$options" | dmenu -i -p "DOWN:" -nb black -nf white -sb white -sf black)
+
+# Prompt for the URL
+URL="$(xsel -b)"
+# Check if the URL is empty
+
+if [ -z "$URL" ]; then
+    echo "No URL found in clipboard."
+    exit 1
+fi
+
+# Check user choice and run yt-dlp command accordingly
+case "$choice" in
+   AUD)
+
+          $TERMINAL -e yt-dlp -x "$URL" \
+          --audio-format m4a \
+          --audio-quality 0 --prefer-ffmpeg \
+          --add-metadata --embed-thumbnail \
+          -o "$MUCOL%(title)s.%(ext)s"
+
+	;; 
+
+   VID)
+	$TERMINAL -e yt-dlp -f bestvideo+bestaudio --merge-output-format mkv --postprocessor-args '-c:v libx264 -crf 18 -preset slow -c:a copy' -o "$VICOL%(title)s.%(ext)s" "$URL"
+	;;
+
+    *)
+        echo "Invalid selection"
+        ;;
+esac

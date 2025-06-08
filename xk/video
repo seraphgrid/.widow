@@ -1,0 +1,156 @@
+# [labyrinth]
+
+alt + w ; i
+# config
+ labyrinth -I
+
+alt + w ; a
+# audio
+ labyrinth -a
+
+alt + Tab
+# normal
+ labyrinth -v
+
+# [wm]
+
+alt + w ; backslash ; q 
+ dwmc quit
+
+alt + w ; L  
+ slock 
+
+alt + {j,k}
+ dwmc focusstack {+,-}1
+ 
+alt + w ; {j,k}
+  dwmc focusstack {+,-}1
+ 
+# alt + w ; {h,l}
+#  dwmc setmfact {-,+}0.05
+ 
+# shift + space ; {u,i}
+#  dwmc setcfact {-,+}0.85
+
+# shift + space ; o 
+#  dwmc setcfact
+
+# alt + w ; c 
+#  dwmc setlayoutex {0,1}
+# 
+alt + w ; b 
+ dwmc togglebar
+ 
+alt + w ; {1-9}
+ dwmc view {0-9}
+
+alt + shift + 2 ; {1-9}
+ dwmc tagex {0-9}
+ 
+alt + w ; z
+ dwmc togglemax
+
+alt + e
+ hints
+
+alt + w ; v 
+ hints -m scroll
+
+alt + w ; F 
+ warpd --hint
+
+alt + w ; r 
+ warpd --normal
+
+alt + w ; z ; z
+ dwmc zoom
+
+alt + w ; Z
+ dwmc zoom
+
+alt + w ; q 
+ dwmc killclient
+
+alt + w ; {n,N}  
+ dunstctl {close-all,history-pop}
+
+# [ss]
+
+Print
+ scrot -s '%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/Screenshots/' 
+
+shift + Print
+ scrot -f '%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/Screenshots/'
+
+# [nav]
+
+alt + e
+ hints
+
+alt + E 
+ warpd --normal
+
+alt + w ; v
+ hints -m scroll
+
+alt + w ; e 
+ rofi -show window -kb-element-prev 'k' -kb-element-next 'j' -kb-accept-entry 'o'
+
+alt + q ; I
+ rofi -show drun
+
+# [tools]
+
+# [photo]
+
+alt + q ; p
+ nomacs
+
+alt + q ; v
+ mpv
+
+ctrl + space
+ st
+ 
+alt + q ; colon
+ python ~/cmdlaunch.py "" 
+
+alt + q ; {w,W}
+ {qutebrowser,torbrowser-launcher} 
+
+alt + q ; y
+ st -e "yt-dlp -f 'bestvideo+bestaudio/best' -o '~/Videos/rnd/%(title)s.%(ext)s' (xsel -b)"
+  
+alt + q ; p 
+ nomacs
+
+alt + q ; P ; y
+ python ~/cmdlaunch.py -n "yay -Syu --noconfirm" 
+
+alt + q ; P ; m
+ python ~/cmdlaunch.py -n "sudo pacman -Syu --noconfirm" 
+
+alt + q ; r
+ vokoscreenNG
+
+alt + q ; t 
+ python ~/cmdlaunch.py "python ~/t/t.py --task-dir ~/tasks --list tasks -d" 
+
+alt + q ; c
+ handbrake
+
+alt + q ; e
+ kdenlive
+
+# [basic_system]
+
+alt + q ; $  
+ redshift {-O 4300,-x}
+
+alt + w ; x 
+ xkill 
+
+# [config]
+
+alt + w ; comma
+ st -e nvim ~/.config/sxhkd/video

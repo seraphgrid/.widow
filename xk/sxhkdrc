@@ -1,0 +1,201 @@
+# intended for intricate user window management.
+# [labyrinth]
+
+Tab ; v
+ sh ~/labyrinth -V
+
+Tab ; a 
+ sh ~/labyrinth -a 
+
+Tab ; n 
+ sh ~/labyrinth -n 
+
+Tab ; y
+ sh ~/labyrinth -s 
+
+Tab ; t
+ sh ~/labyrinth -t
+
+Tab ; x
+ sh ~/labyrinth -H 
+
+Tab ; w 
+ sh ~/labyrinth -I 
+
+i 
+ sh ~/labyrinth -I 
+
+alt + Tab 
+ sh ~/labyrinth -I 
+
+Tab ; f
+ sh ~/labyrinth -c 
+
+# [wm]
+
+space ; l  
+ dwmc setlayoutex {0,1}
+
+space ; {1-9} 
+ dwmc tagex {0-9}
+
+shift + space
+ dwmc togglemax
+
+{1-9} 
+ dwmc view {0-9}
+
+{j,k}
+ dwmc focusstack {+,-}1
+
+ctrl + {j,k}
+ dwmc {pushdown,pushup}
+
+n
+ dunstctl close-all
+
+N 
+ dunstctl history-pop
+
+{l,h}
+ dwmc setmfact {+,-}0.05
+
+{J,K}
+ dwmc setcfact {+,-}0.45
+
+equal
+ dwmc setcfact 
+
+o
+ dwmc zoom
+
+r 
+ dwmc focusmaster
+
+e
+ dwmc zoom
+
+W 
+ dwmc togglebar
+
+n
+ dunstctl close-all
+
+N 
+ dunstctl history-pop
+
+# kill windows. pleae. 
+q 
+ dwmc killclient
+
+backslash ; x 
+ python ~/cmdlaunch.py -n "pkill -f"
+
+# warpd
+f
+ warpd --hint
+
+v
+ warpd --normal
+
+# [menus]
+
+slash 
+ rofi -show window -kb-element-prev 'k' -kb-element-next 'j' -kb-accept-entry 'o'
+ 
+I
+ rofi -show drun
+
+a
+ spmenu
+
+colon
+ sh ~/labyrinth -I && python ~/cmdlaunch.py "" && sh ~/labyrinth -v
+
+# [config] 
+
+shift + slash
+ st -e vim ~/.config/sxhkd/vim   
+
+# [applications] 
+
+semicolon
+ st
+
+backslash ; m ; d
+ sh ~/labyrinth -I && python ~/cmdlaunch.py "mkdir -p" && sh ~/labyrinth -v
+
+backslash ; r ; d
+ sh ~/labyrinth -I && python ~/cmdlaunch.py "rmdir -p" && sh ~/labyrinth -v
+
+backslash ; f ; t
+ sh ~/labyrinth -I && python ~/cmdlaunch.py "touch" && sh ~/labyrinth -v
+
+backslash ; p ; i
+ sh ~/labyrinth -I && python ~/cmdlaunch.py "sudo pacman -Syu" && sh ~/labyrinth -v
+
+backslash ; p ; I
+ sh ~/labyrinth -I && python ~/cmdlaunch.py "yay -S" && sh ~/labyrinth -v 
+
+backslash ; p ; q
+ sh ~/labyrinth -I && python ~/cmdlaunch.py "yay -Qs" && sh ~/labyrinth -v
+
+backslash ; p ; Q
+ sh ~/labyrinth -I && python ~/cmdlaunch.py "sudo pacman -Qs" && sh ~/labyrinth -v
+
+backslash ; w
+ firefox
+
+backslash ; e
+ sh ~/labyrinth -I && python ~/cmdlaunch.py -n "st -e $EDITOR" && sh ~/labyrinth -v
+
+backslash ; l 
+ slock
+
+backslash ; c
+ xterm -hold -e "cal"
+
+# need actual marking functionality.
+# $ometing need$ to allow u to mark a currently open file into the nromal mode config for being launched with grave then the letter.
+
+# [bookmark$]
+
+grave ; z
+ st -e $EDITOR ~/.zshrc
+
+grave ; a 
+ firefox "https://duck.ai"
+
+grave ; m
+ st -e ncmpcpp
+
+grave ; r 
+ st -e ranger
+
+grave ; k
+ screenkey
+
+grave ; K
+ pkill screenkey
+
+grave ; v
+ vokoscreenNG
+
+grave ; i
+ armcord
+
+grave ; d 
+ jamesdsp
+
+grave ; w
+ nitrogen
+
+grave ; c
+ rog-control-center
+
+grave ; C
+ sh ~/labyrinth -I && st -e nvim ~/cmdlaunch.py && sh ~/labyrinth -v 
+
+grave ; g
+ st -e nethack
+# w + b back and forth workspace. 

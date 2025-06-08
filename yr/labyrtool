@@ -1,0 +1,247 @@
+#!/bin/bash
+
+
+LABYRDIR="$HOME/.labyrinth/"
+LABYRTERM="alacritty"
+LABYRMU="alacritty -e cmus"
+LABYRMPC="vimpc"
+LABYRTERM2='xterm'
+MUREMOTE="mpc"
+LABYREDIT="$LABYRTERM2 -e vim"
+LABYRGAL='nomacs'
+LABYRDAW='reaper'
+LABYRDAW2='bitwig-studio'
+LABYRWEB='qutebrowser'
+LABYRWAL='nitrogen'
+LABYRMODE=$(cat ~/.config/sxhkd/current_mode)
+LABYRFM="ranger"
+WIDIR="$HOME/.widow"
+MUCOL="$HOME/Music/collection/rnd/"
+
+wideps() { # ignore this 
+    case "$1" in
+        "Gentoo")
+            emerge -av sys-devel/base sys-devel/gcc sys-devel/make sys-devel/autoconf sys-devel/automake x11-libs/libX11 x11-libs/libXft x11-libs/libXinerama x11-base/xorg-server x11-apps/xinit
+            ;;
+        "Debian")
+            sudo apt install build-essential libxi-dev libx11-dev libxft-dev libxfixes-dev libxtst-dev libxinerama-dev xorg-dev xinit git libgirepository1.0-dev libxkbcommon-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 pipx
+	    git clone https://github.com/rvaiya/warpd.git
+	    cd warpd
+	    make && sudo make install
+	    [ $XDG_SESSION_TYPE = "wayland" ] && sudo apt install gtk-layer-shell grim && \
+	    pipx ensurepath && \
+	    pipx install git+https://github.com/AlfredoSequeida/hints.git
+            ;;
+        "Fedora")
+            sudo dnf groupinstall "Development Tools" && sudo dnf install libX11-devel libXft-devel libXinerama-devel xorg-x11-server-Xorg xorg-x11-xinit git gcc gobject-introspection-devel cairo-gobject-devel pkg-config python3-devel gtk4 pipx
+	    [ $XDG_SESSION_TYPE = "wayland" ] && sudo dnf install gtk-layer-shell grim
+            pipx ensurepath && \
+            pipx install git+https://github.com/AlfredoSequeida/hints.git
+	    git clone https://github.com/rvaiya/warpd.git
+     	    cd warpd
+	    make -j4 && sudo make install
+            ;;
+        "Alpine")
+            apk add build-base libx11-dev libxft-dev libxinerama-dev xorg-server xinit
+            ;;
+        "Slackware")
+            slackpkg install gcc make autoconf automake libX11 libXft libXinerama xorg-server xinit
+            ;;
+        "OpenBSD")
+            pkg_add gmake autoconf automake libX11 libXft libXinerama xorg-server xinit
+            ;;
+        "FreeBSD")
+            sudo pkg install gcc gmake autoconf automake libX11 libXft libXinerama xorg-server xorg-xinit
+            ;;
+        "Void")
+            sudo xbps-install -S base-devel libX11-devel libXft-devel libXinerama-devel xorg-server xorg-xinit
+            ;;
+        "NixOS")
+            nix-env -iA nixos.gcc nixos.gnumake nixos.autoconf nixos.automake nixos.libX11 nixos.libXft nixos.libXinerama nixos.xorg.xorgserver nixos.xorg.xinit
+            ;;
+        "openSUSE")
+            sudo zypper install -t pattern devel_basis && sudo zypper install libX11-devel libXft-devel libXinerama-devel xorg-x11-server xorg-x11-xinit
+            ;;
+	"Arch")
+	    
+            sudo pacman -S base-devel libx11 libxft libxinerama xorg-server xorg-xinit git python cairo pkgconf gobject-introspection gtk4 python-pipx pasystray dunst 7z
+	    yay -S warpd 
+            [ $XDG_SESSION_TYPE = "wayland" ] && sudo pacman -S gtk-layer-shell grim || sudo pacman -S libwnck3
+	    pipx ensurepath && \
+	    pipx install git+https://github.com/AlfredoSequeida/hints.git
+            ;;
+        *)
+            echo "Unsupported distribution or package manager."
+            exit 1
+            ;;
+    esac
+}
+
+case "$1" in
+
+    -g) 
+        exec $LABYRGAL $2 &
+        ;;
+
+    -m)
+        exec $LABYRMU $2 & 
+        ;;
+
+    -mr) 
+
+        exec $MUREMOTE $2 &
+        ;;
+
+    -dv)
+        exec $LABYRTERM2 $MUDL &
+        ;;
+
+    -e)
+        exec $LABYREDIT $2 &
+        ;;
+
+    -E)
+
+        exec $LABYRTERM -e $2 &
+        ;;
+
+    -t)
+        exec $LABYRTERM $2 &
+        ;;
+
+    -w)
+        exec $LABYRWAL $2 &
+        ;;
+
+    -b)
+        exec $LABYRWEB $2 &
+        ;;
+
+    -M)
+        notify-send $LABYRMODE
+        ;;
+
+    -sf)
+	
+        shotgun - | xclip -selection clipboard -t image/png
+        
+        option=$(echo -e "Yes\nNo" | dmenu -i -p "::save")
+        if echo "$option" | grep -q "Yes"; then
+            filename=$(echo | dmenu -p "Enter filename:") && \
+            filename=${filename:-$(date +%s)} && \
+            mkdir -p $WIDIR/.rec/img
+            
+            shotgun $WIDIR/.rec/img/"$filename.png"
+        fi
+
+        ;;
+
+
+    -ss)
+        selection=$(hacksaw -f "-i %i -g %g")
+        
+        shotgun $selection - | xclip -selection clipboard -t image/png
+        
+        option=$(echo -e "Yes\nNo" | dmenu -i -p "::save")
+        
+        if echo "$option" | grep -q "Yes"; then
+            filename=$(echo | dmenu -p "Enter filename:") && \
+            filename=${filename:-$(date +%s)} && \
+            mkdir -p $WIDIR/.rec/img
+            
+            shotgun $selection $WIDIR/.rec/img/"$filename.png"
+        fi
+        ;;
+
+   -sv)
+
+    	dir=$WIDIR/.rec/vi
+    	current=$(date +%F_%H-%M-%S)
+    	
+    	mkdir -p "$dir"
+    	hacksaw | {
+    	    IFS=+x read -r w h x y
+    	
+    	    w=$((w + w % 2))
+    	    h=$((h + h % 2))
+    	
+    	    $LABYRTERM -e ffmpeg \
+    	        -v 16            \
+    	        -r 30            \
+    	        -f x11grab       \
+                -s "${w}x${h}"   \
+    	        -i ":0.0+$x,$y"  \
+    	        -preset slow     \
+    	        -c:v h264        \
+    	        -pix_fmt yuv420p \
+    	        -crf 20          \
+    	        -f alsa          \
+		-i default       \
+    	        "$dir/$current.mp4" && \
+                ffmpeg -f alsa -i default -af "afftdn=nf=-75"
+    		}
+	;;
+
+   -ar)
+
+   	   directory=$WIDIR/.rec/au
+   	   date=$(date +%F_%H-%M-%S)
+           $LABYRTERM -e ffmpeg -f alsa -i default "$directory/$date".wav
+
+    	;;
+   
+   -bk)
+         sudo cp -rv /.local/bin/labyrtool $WIDIR/.yr/
+         sudo cp -rv /.local/bin/labyrinth $WIDIR/.yr/
+	 cp -rv ~/.config/sxhkd/* $WIDIR/.xk/
+	 cp -rv ~/.config/dunst/dunstrc $WIDIR/.xt/
+        ;;
+
+   --edit)
+        
+       sudo -e /usr/bin/labyrtool
+
+       ;;
+
+#   --install)
+#	
+#       	 if [ -f /etc/os-release ]; then
+#	     . /etc/os-release
+#	     case "$ID_LIKE" in
+#	         "gentoo")
+#	             wideps "Gentoo"
+#	             ;;
+#	         "debian")
+#	             wideps "Debian"
+#	             ;;
+#	         "fedora")
+#	             wideps "Fedora"
+#	             ;;
+#	         "alpine")
+#	             wideps "Alpine"
+#	             ;;
+#	         "slackware")
+#	             wideps "Slackware"
+#	             ;;
+#	         "openbsd")
+#	             wideps "OpenBSD"
+#	             ;;
+#	         "freebsd")
+#	             wideps "FreeBSD"
+#	             ;;
+#	         "void")
+#	             wideps "Void"
+#	             ;;
+#	         "nixos")
+#	             wideps "NixOS"
+#	             ;;
+#	         "opensuse-leap" | "opensuse-tumbleweed")
+#	             wideps "openSUSE"
+#	 	    ;;
+#	         "arch" | "endeavouros" | "cachyos" )
+#	             wideps "Arch"
+#	             ;;
+#	     esac
+#        fi
+	
+esac 

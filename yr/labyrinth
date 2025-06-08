@@ -1,0 +1,181 @@
+#!/bin/bash
+# Define the paths to your configuration files
+LABYRDIR="$HOME/.config/sxhkd"
+VIM_MODE="$LABYRDIR/vim"           # Main configuration file
+MODE_FILE="$LABYRDIR/current_mode" # File to store the current mode
+DEBUG_MODE="$LABYRDIR/debug"
+SECURITY_MODE="$LABYRDIR/security"
+VIDEO_MODE="$LABYRDIR/video"
+AUDIO_MODE="$LABYRDIR/audio"
+SYSTEM_MODE="$LABYRDIR/system"     # Monitoring system internals. 
+NETWORK_MODE="$LABYRDIR/network"
+GAME_MODE="$LABYRDIR/game"
+TASK_MODE="$LABYRDIR/task"
+INSERT_MODE="$LABYRDIR/ins"
+CONFIG_MODE="$LABYRDIR/config"
+VIM_INS="$LABYRDIR/vi"
+
+# Function to restart sxhkd with a specified configuration
+restart_sxhkd() {
+    local config_file="$1"
+    # Kill any running instance of sxhkd
+    killall sxhkd &
+    dunst &
+
+    sleep 0.1 &
+    
+    # Start sxhkd with the specified configuration file
+    sxhkd -c "$config_file" &
+
+}
+
+
+# Function to toggle between modes
+toggle_mode() {
+
+    if [[ -f "$MODE_FILE" ]]; then
+        current_mode=$(cat "$MODE_FILE")
+    else
+        current_mode="VIM"  # Default to insert mode if no file exists
+    fi
+
+    if [[ "$current_mode" == "INS" ]]; then
+        restart_sxhkd "$VIM_MODE"         
+        echo "VIM" > "$MODE_FILE"
+       
+    else
+        restart_sxhkd "$INSERT_MODE"
+        killall warpd
+        echo "INS" > "$MODE_FILE"
+        
+    fi
+}
+
+# Function to show the current mode
+show_current_mode() {
+    if [[ -f "$MODE_FILE" ]]; then
+        current_mode=$(cat "$MODE_FILE")
+    else
+        current_mode="VIM"  # Default to vim mode if no file exists
+    fi
+    notify-send "MODE: $current_mode"
+}
+
+# Check for flags
+case "$1" in
+
+    -v)
+
+        restart_sxhkd "$VIM_MODE" 
+        CURRENT_MODE='vim' 
+        echo "vim" > "$MODE_FILE" 
+        notify-send "NORMAL" 
+        ;;
+
+    -i)
+
+        restart_sxhkd "$INSERT_MODE" 
+        CURRENT_MODE='ins' 
+        echo "ins" > "$MODE_FILE" 
+        notify-send "INS" 
+        ;;
+
+    -I)
+
+        restart_sxhkd "$VIM_INS" 
+        CURRENT_MODE='vi' 
+        echo "vi" > "$MODE_FILE" 
+        notify-send "VI" 
+        ;;
+
+    -V)
+
+        restart_sxhkd "$VIDEO_MODE"  
+        CURRENT_MODE='video' 
+        echo "video" > "$MODE_FILE" 
+        notify-send "A/[V]" 
+     	;;
+
+    -a) 
+
+        restart_sxhkd "$AUDIO_MODE" 
+        CURRENT_MODE='audio' 
+        echo "audio" > "$MODE_FILE" 
+        notify-send "[A]/V" 
+     	;;
+
+    -d)
+
+        restart_sxhkd "$DEBUG_MODE" 
+        CURRENT_MODE='debug' 
+        echo "debug" > "$MODE_FILE" 
+        notify-send "DEBUG" 
+     	;;
+    
+    -t)
+
+        restart_sxhkd "$TASK_MODE" 
+        CURRENT_MODE='task' 
+        echo "task" > "$MODE_FILE" 
+        notify-send "TASK" 
+     	;;
+    
+    -n) 
+
+        restart_sxhkd "$NETWORK_MODE" 
+        CURRENT_MODE='network' 
+        echo "network" > "$MODE_FILE" 
+        notify-send "NETWORK" 
+	;;
+
+    -y) 
+        restart_sxhkd "$SECURITY_MODE" 
+        CURRENT_MODE='security' 
+        echo "security" > "$MODE_FILE" 
+        notify-send "SECURITY" 
+	;;
+
+    -s) 
+        restart_sxhkd "$SYSTEM_MODE" 
+        CURRENT_MODE='system' 
+        echo "system" > "$MODE_FILE" 
+        notify-send "SYSTEM" 
+	;;
+
+    -c) 
+        restart_sxhkd "$CONFIG_MODE" 
+        CURRENT_MODE='config' 
+        echo "config" > "$MODE_FILE"  
+        notify-send "CONFIG" 
+	;;
+
+    -e)
+        labyrtool -e $LABYRDIR/$(cat $MODE_FILE) 
+        ;;
+
+    -H)
+        show_current_mode 
+        ;;
+
+    -h) 
+
+        echo "Usage: $0 -v | -i | -d | -n | -a | -t | -s"
+        echo "  -v: VIM MODE ENABLE"
+        echo "  -i: INSERT MODE ENABLE"
+        echo "  -I: VIM INSERT MODE ENABLE"
+        echo "  -a: AUDIO MODE ENABLE"
+        echo "  -V: VIDEO MODE ENABLE"
+        echo "  -d: DEBUG MODE ENABLE"
+	    echo "  -n: NETWORK MODE ENABLE"
+        echo "  -t: TASK MODE ENABLE" 
+        echo "  -S: SYSTEM MODE ENABLE"
+        echo "  -H: SHOW CURRENT MODE"
+        ;; 
+
+    *)
+        restart_sxhkd "$VIM_MODE" 
+        echo "vim" > "$MODE_FILE" 
+        notify-send "VIM" 
+        ;; 
+
+esac
