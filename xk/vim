@@ -1,13 +1,12 @@
 # labyrinth is a modal interface overlay for widow. 
 # need ability to quickly send any one key or macro before returning to normal
 
-
 # [labyrinth]
 
 shift + space
  labyrinth -v 
 
-Super_L ; v
+alt + v
  labyrinth -V
 
 a
@@ -17,7 +16,7 @@ Super_L ; n
  labyrinth -n 
 
 Super_L ; y
- labyrinth -s 
+ labyrinth -y 
 
 Super_L ; t
  labyrinth -t
@@ -43,48 +42,13 @@ Super_L ; c
 shift + space
  labyrinth -v 
 
-# [Super_R]
-
-Super_R ; v
- sh labyrinth -V
-
-space ; a 
- sh labyrinth -a
-
-space ; n 
- sh labyrinth -n 
-
-Super_R ; y
- sh labyrinth -s 
-
-Super_R ; t
- sh labyrinth -t
-
-Super_R ; x
- sh labyrinth -H 
-
-Super_R ; w 
- sh labyrinth -I 
-
-i 
- sh labyrinth -i 
-
-I 
- sh labyrinth -I 
-
-w 
- sh labyrinth -I 
-
-Super_R ; c
- sh labyrinth -c 
-
 # [wm]
-
-L 
- slock
 
 ctrl + l 
  slock
+
+{H,L}
+ dwmc tagmon {-,+}1
 
 ctrl + grave
  dwmc setlayoutex {8,0}
@@ -119,7 +83,7 @@ F11
 {j,k}
  dwmc focusstack {+,-}1
 
-shift + F8
+F9
  redshift {-O 2444,-x}
 
 ctrl + w ; {j,k}
@@ -128,7 +92,7 @@ ctrl + w ; {j,k}
 {J,K}
  dwmc {pushdown,pushup}
 
-ctrl + {j,k}
+ctrl + {k,j}
  dwmc setcfact {+,-}0.45
 
 equal
@@ -143,13 +107,14 @@ z
 W 
  dwmc togglebar
 
-c ; f
- labyrinth -i && python ~/cmdlaunch.py "pkill -f" && python ~/cmdlaunch.py -n ""
+shift + 1
+ pulsar-termrun
+
+#c ; f
+# labyrinth -i && python ~/cmdlaunch.py "pkill -f" && python ~/cmdlaunch.py -n ""
 
 c ; w
- dwmc killclient; \
- spmenu; \
- labyrinth -I
+ dwmc killclient && dmenu-frecency && labyrinth -I
 
 n
  dunstctl close-all
@@ -164,9 +129,6 @@ q
 
 Q
  dwmc quit
-
-d 
- labyrinth -i && python ~/cmdlaunch.py -n "pkill -f" && labyrinth -v 
 
 x
  xkill
@@ -193,17 +155,11 @@ v
 
 # [menus]
 
-{e,slash}
+{slash}
  rofi -show window -kb-element-prev 'k' -kb-element-next 'j' -kb-accept-entry 'o'
 
-colon
- spmenu
-
-backslash ; a
- pavucontrol
-
-exclam
-  labyrinth -i && python ~/cmdlaunch.py -n "" && labyrinth -v
+o ; a
+ labyrtool -E pulsemixer
 
 # [config] 
 
@@ -213,16 +169,16 @@ comma
 # [applications] 
 
 M
- labyrtool -E cmus
+ labyrtool -E cmus && labyrinth -I
 
-backslash ; m
- labyrtool -E neomutt
+o ; m
+ bash ~/.widow/.xt/dmscripts/scripts/dm-youtube
 
-backslash ; p
+o ; p
  labyrtool -E glances
 
-backslash ; k
- keepassxc
+o ; k
+ kpmenu
 
 Print ; i
  labyrtool -ss
@@ -231,7 +187,7 @@ Print ; o
  labyrtool -sf
 
 Print ; v
- vokoscreenNG
+ dm-record
 
 Print ; u
  spmenu -d 
@@ -239,26 +195,32 @@ Print ; u
 Print ; w
  spmenu -D
 
-shift + 4
- labyrtool -t
+t
+ labyrtool -t && labyrinth -I
 
 {F7,F8}
  brightnessctl set 20%{-,+}
 
-backslash ; w
+o ; w
  nitrogen
 
-backslash ; f
- labyrtool -E ranger
+o ; f
+ dmenufm
 
-backslash ; semicolon
- labyrtool -E "$(xsel -b)"
+o ; F
+ labyrinth -I && labyrtool -E ranger 
 
-backslash ; comma
- labyrtool -e "$HOME/.widow/.src/config.h"
+o ; semicolon
+ qutebrowser "$(xsel -b)"
 
-backslash ; period
- xterm -e "cd $HOME/.widow/.src && make -j4 && sudo make clean install"
+o ; comma
+ labyrinth -I && labyrtool -E "vim $HOME/.widow/.src/config.h" 
+
+o ; period
+ labyrinth -I && xterm -e "cd $HOME/.widow/.src && sudo make clean install"
+
+period
+ emojimenu
 
 backslash ; e 
  labyrtool -e
@@ -269,38 +231,38 @@ backslash ; v
 backslash ; g
  labyrtool -g
 
-o 
- labyrinth -T
+question
+ labyrtool -se
 
 T
  spmenu -m
 
-backslash ; T
+o ; T
  spmenu -M
 
-backslash ; b
- labyrinth -I && labyrtool -b 
+o ; {b,B}
+ labyrinth -I && {qutebrowser,torbrowser-launcher}
 
-backslash ; m
- labyrtool -m && labyrinth -I
+M
+ labyrtool -E cmus 
+
+ctrl + semicolon
+ labyrinth -I && pulsar-termrun
 
 semicolon
- rofi -show drun
+ dmenu-frecency
 
-backslash ; v
- vokoscreenNG
+P
+ labyrtool -E "git clone $(xsel -b) $(dmenufm -t)" 
 
-backslash ; c
+o ; c
  equibop
 
-backslash ; k
- screenkey
+m
+ kitty -e cmus
 
-y
- xsel -op | xsel -b
-
-p
- xdotool getactivewindow key --window "%@" ctrl+v
+ctrl + n 
+ labyrinth -I && netmenu 
 
 # need actual marking functionality.
 # $ometing need$ to allow u to mark a currently open file into the nromal mode config for being launched with grave then the letter.
@@ -315,4 +277,3 @@ grave + period
 
 grave + p
  labyrtool -E "sudo pacman -Syu"
-
