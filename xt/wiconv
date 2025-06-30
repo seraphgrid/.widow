@@ -1,0 +1,46 @@
+#!/bin/bash
+
+TERMINAL="kitty -e"
+
+audio_formats() {
+    echo -e "mp3\nwav\nflac\naac\nogg\nm4a"
+}
+
+video_formats() {
+    echo -e "mp4\nmkv\navi\nmov\nflv\nwebm"
+}
+
+input_file=$(echo $(dmenufm -t))
+
+if [ -z "$input_file" ]; then
+    echo "No file selected."
+    exit 1
+fi
+
+file_type=$(file --mime-type -b "$input_file")
+
+if [[ $file_type == audio/* ]]; then
+    format=$(audio_formats | dmenu -nb black -nf white -sb white -sf black -i -p "Select audio format to convert to:")
+elif [[ $file_type == video/* ]]; then
+    format=$(video_formats | dmenu -nb black -nf white -sb white -sf black -i -p "Select video format to convert to:")
+else
+    echo "Selected file is neither audio nor video."
+    exit 1
+fi
+
+if [ -z "$format" ]; then
+    echo "No format selected."
+    exit 1
+fi
+
+output_file="${input_file%.*}.$format"
+
+# Perform the conversion using ffmpeg
+$TERMINAL ffmpeg -i "$input_file" "$output_file"
+
+# Check if the conversion was successful
+if [ $? -eq 0 ]; then
+    echo "Conversion successful: $output_file"
+else
+    echo "Conversion failed."
+fi
