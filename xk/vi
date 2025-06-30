@@ -37,6 +37,9 @@ alt + o ; Q
 alt + o ; L
  slock 
 
+alt + o ; ctrl + l
+ slock 
+
 alt + {j,k}
  dwmc focusstack {+,-}1
  
@@ -52,7 +55,7 @@ alt + o ; {j,k}
 # shift + space ; o 
 #  dwmc setcfact
 
-alt + o ; ctrl + grave 
+alt + o ; {ctrl + grave}
  dwmc setlayoutex {8,0}
  
 alt + o ; F11 
@@ -189,7 +192,7 @@ alt + q ; C
  rog-control-center ; rog-control-center ; rog-control-center 
 
 alt + o ; backslash ; p
- keepassxc
+ kpmenu
 
 alt + o ; backslash ; colon
  rofi -show drun

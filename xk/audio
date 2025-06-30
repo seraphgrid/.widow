@@ -20,6 +20,9 @@ alt + o ; shift + space
 alt + w
  labyrinth -v
 
+Escape
+ labyrinth -v
+
 # [wm]
 
 alt + o ; Q 
@@ -183,7 +186,7 @@ alt + q ; c ; a
 alt + q ; c ; b
  alacritty -e bluetuith
 
-alt + q ; A 
+alt + q ; c ; A 
  friture
 
 alt + q ; w 

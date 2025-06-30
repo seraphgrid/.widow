@@ -15,6 +15,9 @@ alt + Tab
 # normal
  labyrinth -v
 
+Escape
+ labyrinth -v
+
 Super_L
  labyrinth -v
 
@@ -23,11 +26,8 @@ alt + o ; backslash ; v
 
 # [nav]
 
-alt + o ; slash
+alt + o ; e
  rofi -show window -kb-element-prev 'k' -kb-element-next 'j' -kb-accept-entry 'o'
-
-alt + o ; e 
- emojimenu
 
 alt + o ; semicolon
  rofi -show drun
@@ -154,7 +154,7 @@ Print ; a
 Print ; u
  spmenu -d
 
-alt + o ; F3
+alt + o ; shift + 4
  labyrtool -t
 
 alt + r
@@ -211,10 +211,8 @@ alt + q ; d
 alt + o ; t 
  spmenu -m
 
-alt + o ; question
- labyrtool -se
-
 # [system]
+
 
 alt + o ; c ; p
  labyrtool -E glances
@@ -256,3 +254,4 @@ alt + o ; P
 
 alt + o ; comma
  labyrinth -e
+
