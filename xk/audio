@@ -1,237 +1,106 @@
 alt + Tab
-# vim 
  labyrinth -v
 
 Super_L
-# vim 
  labyrinth -v
 
-alt + o ; i  
 # audio
  labyrinth -I
 
-alt + o ; v
-# video
- labyrinth -V
-
-alt + o ; shift + space
+shift + space
  labyrinth -a
-
-alt + w
- labyrinth -v
 
 Escape
  labyrinth -v
 
-# [wm]
+d
+ slmenu
 
-alt + o ; Q 
- dwmc quit
+e
+ reaper
 
-alt + o ; L
- slock 
+m
+ kitty -e cmus
 
-alt + {j,k}
- dwmc focusstack {+,-}1
- 
-alt + o ; {j,k}
- dwmc focusstack {+,-}1
- 
-# alt + o ; {h,l}
-#  dwmc setmfact {-,+}1.1
- 
-# shift + space ; {u,i}
-#  dwmc setcfact {-,+}0.85
+M
+ foxtag
 
-# shift + space ; o 
-#  dwmc setcfact
-
-alt + o ; shift + grave 
- dwmc setlayoutex {0,1}
- 
-alt + o ; F11 
- dwmc togglebar
- 
-alt + o ; {1-9} 
- dwmc viewex {0-8}
-
-alt + o ; {g ; g,G}
- dwmc viewex {0,8}
-
-alt + o ; space ; {1-9}
- dwmc tagex {0-8}
-
-alt + o ; space ; {g ; g,G}
- dwmc tagex {0,8}
-
-alt + o ; shift + grave
- dwmc togglemax
-
-alt + o ; c ; w
- dwmc killclient; rofi -show drun
-
-alt + o ; ctrl + n 
- dwmc nametag
-
-alt + o ; space ; {j,k}
- dwmc rotatestack {+,-}1
-
-alt + o ; ctrl + {j,k}
- dwmc setcfact {+,-}0.45
-
-alt + o ; equal
- dwmc setcfact 
-
-alt + o ; {l,h}
- dwmc setmfact {+,-}0.18
-
-alt + o ; f
- hints
-
-alt + o ; r 
- hints -m scroll
-
-alt + o ; V 
- warpd --hint
-
-alt + o ; v 
- warpd --normal
-
-alt + o ; z 
- dwmc zoom
-
-alt + o ; y
- xdotool getactivewindow key "ctrl+c"
-
-alt + o ; p
- xdotool getactivewindow key "ctrl+v"
- 
-alt + o ; q 
- dwmc killclient
-
-alt + o ; {n,N}  
- dunstctl {close-all,history-pop}
-
-alt + o ; e
- rofi -show window -kb-element-prev 'k' -kb-element-next 'j' -kb-accept-entry 'o'
-
-alt + o ; colon 
- rofi -show drun
-
-# [cmus]
-
-alt + q ; M ; {r,R} 
- cmus-remote -r
-
-alt + q ; {space} 
- cmus-remote {-u,-p}
-
-alt + q ; {equal} 
- cmus-remote -v {20,90}
-
-
-# [tools] 
-
-Print ; i
- labyrtool -ss
-
-Print ; o
- labyrtool -sf
-
-Print ; r
- labyrtool -sv
-
-Print ; a
- labyrtool -ar
-
-Print ; u
+u
  spmenu -d
 
-alt + o ; shift + 4
- labyrtool -t
-
-alt + q ; e
- labyrtool -e "~/Music/lyrics/scratch.txt"
-
-alt + o ; backslash ; b
- labyrtool -b
-
-alt + q ; f
- nicotine
-
-alt + q ; d
- bitwig-studio 
-
-alt + q ; r
- goodvibes
-
-alt + q ; d
- jamesdsp -t
-
-alt + q ; ctrl + d
- jamesdsp
-
-alt + q ; R
- goodvibes
-
-alt + q ; m 
- labyrtool -m
-
-alt + q ; c ; p
- labyrtool -E pulsemixer
-
-alt + q ; c ; a
- labyrtool -E alsamixer
-
-alt + q ; c ; b
- alacritty -e bluetuith
-
-alt + q ; c ; A 
+a 
  friture
 
-alt + q ; w 
- qutebrowser "https://photon-reddit.com/r/Piracy/wiki/megathread/music/"
+f
+ dmenufm ~/Music/collection
 
-# needs special behavior for creating directories blind with prepended paths.
+q
+ jamesdsp
 
-alt + q ; p
- python ~/cmdlaunch.py "yay -a --noconfirm" 
-
-alt + q ; P
- python ~/cmdlaunch.py "sudo pacman -S --noconfirm" 
-
-# [yt-dlp] 
-
-alt + q ; y
- labyrtool -ad
+C
+ wiconv
 
 # [beets]
 
-alt + q ; B ; i
+b ; i
  labyrtool -E "beet import $HOME/Music/collection/genre"
 
-alt + q ; B ; I
+b ; I
  labyrtool -E "beet import $HOME/Music/collection/rnd"
 
-alt + q ; B ; l  
+b ; l  
  labyrtool -E "beet list"
 
-alt + q ; B ; m 
+b ; m 
  python ~/cmdlaunch.py "beet modify"
 
-alt + q ; B ; M 
+b ; M 
  python ~/cmdlaunch.py "beet move"
  
-alt + q ; B ; u 
+b ; u 
  python ~/cmdlaunch.py -n "beet update"
 
-alt + q ; B ; f 
+b ; f 
  python ~/cmdlaunch.py -n "beet fields"
 
-alt + q ; B ; s
+b ; s
  python ~/cmdlaunch.py -n "beet stats"
+
+#B
+# fre:ac or disc burn
+
+r 
+ labyrtool -ar
+
+R
+ radiomen 
+
+b
+ labyrtool -E bluetuith && labyrinth -I
+ 
+
+#slash
+ #dmenu for cmus or mpd
+
+{k,j}
+ notify-send $(amixer -D pulse sset Master 5%{+,-})
+
+{K,J}
+ notify-send $(playerctl --player=cmus,chromium,spotify,%any volume 0.1{+,-})
+
+{h,l}
+ playerctl --player=cmus,chromium,spotify,%any position 15{-,+}
+
+{H,L}
+ playerctl --player=cmus,chromium,spotify,%any {previous,next}
+
+p
+ playerctl --player=chromium,cmus,spotify,%any play-pause
+
+A 
+ labyrtool -E pulsemixer
 
 # [config]
 
-alt + o ; comma
- labyrinth -e
+comma
+ labyrinth -e && labyrinth -I
