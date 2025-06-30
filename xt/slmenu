@@ -8,12 +8,15 @@ DESTINATION=$(echo $(dmenufm -p -t))
 
 # Check if DESTINATION is not empty
 if [ -n "$DESTINATION" ]; then
-    OPTS=("qu" "dl" "x")
+    OPTS=("ln" "qu" "dl" "x")
 
     while true; do
         SELOPT=$(printf '%s\n' "${OPTS[@]}" | dmenu -fn "Liberation Mono" -nb black -nf white -sb white -sf black -p "$(echo $DESTINATION | awk -F/ '{print $NF}')")
         
         case "$SELOPT" in
+	    ln)
+		$TERMINAL soulseek login
+		;;
             qu)
                 QUERY=$(echo "" | dmenu -fn "Liberation Mono" -nb black -nf white -sb white -sf black -p '::query')
                 $TERMINAL -e soulseek q "$QUERY"
