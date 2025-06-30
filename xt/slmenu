@@ -19,17 +19,18 @@ if [ -n "$DESTINATION" ]; then
                 $TERMINAL -e soulseek q "$QUERY"
                 ;;
             dl)
-                CODEC=$(echo -e "MP3\nFLAC" | dmenu -fn "Liberation Mono" -nb black -nf white -sb white -sf black -p 'Select codec')
+                CODEC=$(echo -e "MP3\nFLAC" | dmenu -fn "Liberation Mono" -nb black -nf white -sb white -sf black -p '::codec')
 		CODEC=$(echo $CODEC | tr '[:upper:]' '[:lower:]')
 		if [ $CODEC = "mp3" ]; then
-                       	QUALITY=$(echo -e "128\n192\n256\n320" | dmenu -fn "Liberation Mono" -nb black -nf white -sb white -sf black -p 'Select quality') 
+                       	QUALITY=$(echo -e "128\n192\n256\n320" | dmenu -fn "Liberation Mono" -nb black -nf white -sb white -sf black -p '::quality') 
 		fi
                 
-		QUERY=$(echo "" | dmenu -fn "Liberation Mono" -nb black -nf white -sb white -sf black -p 'Enter download query:')
+		QUERY=$(echo "" | dmenu -fn "Liberation Mono" -nb black -nf white -sb white -sf black -p '::query')
 
                 # Ensure QUERY is set before executing the command
                 if [ -n "$QUERY" ]; then
                     $TERMINAL -e soulseek d "$QUERY" -d "$DESTINATION" -m "$CODEC" -q "$QUALITY"
+		    notify-send "$QUERY finished downloading."
                 fi
                 ;;
 	   x)
