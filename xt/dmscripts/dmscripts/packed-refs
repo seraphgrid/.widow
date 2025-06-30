@@ -1,0 +1,8 @@
+# pack-refs with: peeled fully-peeled sorted 
+26f74028dabb18bf7d65f0fb57f73272dabd5902 refs/heads/HostGrady/simplify-dmscripts
+d611202b03f78bba66cbef76ae925673997bb7f7 refs/heads/feature/typeof-check-variables
+143c351a8a5b2e1901d368ab16f63b6c07e4605c refs/heads/feature/wayland
+aa9bc7e588877ef58a1d0ee4f3dd34cc7f182472 refs/heads/fix/dm-pipewire-out-switcher-current-output
+1247a274f51aeefab7b889dde5c8736cf33adf5c refs/heads/master
+af7bf5848d8f58fc2a9621a0b24ac626bf97eff6 refs/merge-requests/127/head
+2dbcab65f5d5d2bef86750eabbe448f746810ba9 refs/merge-requests/127/merge
