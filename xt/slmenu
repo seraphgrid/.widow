@@ -27,7 +27,7 @@ if [ -n "$DESTINATION" ]; then
                         CODEC=$(echo -e "MP3\nFLAC" | dmenu -fn "Liberation Mono" -nb black -nf white -sb white -sf black -p 'Select codec')
 			CODEC=$(echo $CODEC | tr '[:upper:]' '[:lower:]')
 			if [ $CODEC = "mp3" ]; then
-                        	QUALITY=$(echo -e "128\n192\n256\n320\n1411" | dmenu -fn "Liberation Mono" -nb black -nf white -sb white -sf black -p 'Select quality') 
+                        	QUALITY=$(echo -e "128\n192\n256\n320" | dmenu -fn "Liberation Mono" -nb black -nf white -sb white -sf black -p 'Select quality') 
 			fi
                 esac
                 
