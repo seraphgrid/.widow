@@ -1,12 +1,9 @@
 #!/bin/bash
 
-# Set the terminal variable (change this to your preferred terminal)
-TERMINAL="kitty"  # Change this to your preferred terminal, e.g., "xterm", "konsole", "terminator", etc.
+TERMINAL="kitty"
 
-# Get the destination directory using dmenufm
 DESTINATION=$(echo $(dmenufm -p -t))
 
-# Check if DESTINATION is not empty
 if [ -n "$DESTINATION" ]; then
     OPTS=("ln" "qu" "dl" "x")
 
