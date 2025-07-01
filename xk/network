@@ -1,193 +1,84 @@
 # [main] 
 
-alt + o ; Escape
+Escape
  labyrinth -v
-
-alt + o ; i
- labyrinth -I
-
-alt + Tab
- labyrinth -v
-
-alt + w
- labyrinth -v
-
-# [nav]
-
-alt + o ; e
- rofi -show window -kb-element-prev 'k' -kb-element-next 'j' -kb-accept-entry 'o'
-
-alt + o ; i
- rofi -show drun
-
-# [wm]
-
-alt + o ; Q 
- dwmc quit
-
-alt + o ; L
- slock 
-
-alt + {j,k}
- dwmc focusstack {+,-}1
- 
-alt + o ; {j,k}
- dwmc focusstack {+,-}1
- 
-# alt + o ; {h,l}
-#  dwmc setmfact {-,+}1.1
- 
-# shift + space ; {u,i}
-#  dwmc setcfact {-,+}0.85
-
-# shift + space ; o 
-#  dwmc setcfact
-
-alt + o ; ctrl + grave 
- dwmc setlayoutex {0,8}
- 
-alt + o ; F11 
- dwmc togglebar
- 
-alt + o ; {1-9} 
- dwmc viewex {0-8}
-
-alt + o ; {g ; g,G}
- dwmc viewex {0,8}
-
-alt + o ; space ; {1-9}
- dwmc tagex {0-8}
-
-alt + o ; space ; {g ; g,G}
- dwmc tagex {0,8}
-
-alt + o ; shift + grave
- dwmc togglemax
-
-alt + o ; c ; w
- dwmc killclient; rofi -show drun
-
-alt + o ; ctrl + n 
- dwmc nametag
-
-alt + o ; space ; {j,k}
- dwmc rotatestack {+,-}1
-
-alt + o ; ctrl + {j,k}
- dwmc setcfact {+,-}0.45
-
-alt + o ; {J,K}
- dwmc {pushdown,pushup}
-
-alt + o ; equal
- dwmc setcfact 
-
-alt + o ; {l,h}
- dwmc setmfact {+,-}0.18
-
-alt + f
- hints
-
-alt + o ; f
- hints
-
-alt + o ; r 
- hints -m scroll
-
-alt + o ; V 
- warpd --hint
-
-alt + o ; v 
- warpd --normal
-
-alt + o ; z 
- dwmc zoom
-
-alt + o ; y
- xdotool getactivewindow key "ctrl+c"
-
-alt + o ; Y
- xdotool getactivewindow key "ctrl+C"
-
-alt + o ; p
- xdotool getactivewindow key "ctrl+v"
- 
-alt + o ; q 
- dwmc killclient
-
-alt + o ; {n,N}  
- dunstctl {close-all,history-pop}
 
 # [applications]
 
-alt + q ; P
+c
+ labyrtool -E nmtui
+
+s ; p
  xterm -hold -e ping 9.9.9.9 -c 8 
 
-alt + q ; v ; c
+v ; c
  mullvad connect 
 
-alt + q ; v ; d
+v ; d
  mullvad disconnect 
 
-alt + q ; v ; r 
+v ; r 
  mullvad reconnect
 
-alt + q ; v ; n
+v ; s 
+ mullvad split-tunnel add $(xprop _NET_WM_PID | cut -d' ' -f3)
+
+v ; n
  notify-send "$(mullvad status)"
 
-alt + q ; n ; p 
+s ; P 
  xterm -hold -e "netstat -tulpn"
 
-alt + o ; colon
- spmenu
-
-alt + o ; shift + 4
- labyrtool -t
-
-alt + q ; shift + 4
- python ~/cmdlaunch.py nmap -sP
-
-alt + q ; n ; m 
+m 
  xterm -hold -e sudo bandwhich
 
-alt + q ; n ; M
- wireshark
+i ; m 
+ labyrtool -E bmon
 
-alt + q ; i 
+i ; {u}
  st -e sudo ifconfig wlp2s0 {up,down}
 
-alt + q ; I
+i ; I
  xterm -hold -e ifconfig -a 
 
-alt + o ; backslash ; w
+b
  labyrtool -b 
 
-alt + q ; n ; d
+s ; d
  python ~/cmdlaunch.py "dig @127.0.0.1 +dnssec"
 
-alt + q ; e 
+#c ; {l}
+ #cloud launch/kill
+
+#c ; u
+#cloud update/sync
+
+#c ; n
+#cloud folder add
+
+ctrl + i 
  sudo nvim /etc/network/interfaces
 
-alt + q ; n ; i 
- xterm -hold -e sudo iftop
-
-alt + q ; z ; w
+u ; w 
  python ~/cmdlaunch.py "whois"
 
-alt + q ; z ; t
+u ; t
  python ~/cmdlaunch.py "traceroute" 
 
-alt + q ; z ; T
+u ; T
  python ~/cmdlaunch.py "tcpdump -i"
 
-alt + q ; n ; I 
+u ; M
  xterm -hold -e mitmproxy
 
-alt + q ; n ; s
- xterm -hold -e spiderfoot -l 127.0.0.1:7777"
+M
+ wireshark
 
-alt + q ; p ; m
- xterm -hold -e metasploit-framework.msfconsole
+w
+ xterm -hold -e spiderfoot -l 127.0.0.1:7777"
  
-alt + o ; comma
- labyrinth -e
+f 
+ labyrtool -E 'sudo tufw'
+
+comma
+ labyrinth -e && labyrinth -I
