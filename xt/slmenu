@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TERMINAL="kitty"
+TERMINAL="xterm"
 
 DESTINATION=$(echo $(dmenufm -p -t))
 
