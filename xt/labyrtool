@@ -2,7 +2,7 @@
 
 LABYRDIR="$HOME/.labyrinth/"
 LABYRTERM="urxvt"
-LABYRMU="kitty -e cmus"
+LABYRMU="urxvt -e cmus"
 LABYRMPC="vimpc"
 LABYRTERM2='xterm'
 MUREMOTE="mpc"
@@ -189,33 +189,19 @@ case "$1" in
     -sf)
 	
         shotgun - | xclip -selection clipboard -t image/png
-        
-        option=$(echo -e "Yes\nNo" | dmenu -i -nb black -nf white -sb white -sf black -p "::save")
-        if echo "$option" | grep -q "Yes"; then
-            filename=$(echo | dmenu -nb black -nf white -sb white -sf black -p "Enter filename:") && \
-            filename=${filename:-$(date +%s)} && \
-            mkdir -p $WIDIR/.ss
-            
-            shotgun $WIDIR/.ss/"$filename.png"
-        fi
-
+        filename=${filename:-$(date +%s)} && \
+        mkdir -p $WIDIR/.rec/img/
+        shotgun $WIDIR/.rec/img/"$filename.png"
         ;;
 
-
     -ss)
+
         selection=$(hacksaw -f "-i %i -g %g")
-        
         shotgun $selection - | xclip -selection clipboard -t image/png
-        
-        option=$(echo -e "Yes\nNo" | dmenu -i -nb black -nf white -sb white -sf black -p "::save")
-        
-        if echo "$option" | grep -q "Yes"; then
-            filename=$(echo | dmenu -nb black -nf white -sb white -sf black -p "Enter filename:") && \
-            filename=${filename:-$(date +%s)} && \
-            mkdir -p $WIDIR/.rec/img
-            
-            shotgun $selection $WIDIR/.rec/img/"$filename.png"
-        fi
+        filename=${filename:-$(date +%s)} && \
+        mkdir -p $WIDIR/.rec/img
+        shotgun $selection $WIDIR/.rec/img/"$filename.png"
+
         ;;
 
 
@@ -256,30 +242,41 @@ case "$1" in
     	;;
    
    -bk) # probably dont run this, yet...
-         sudo cp -rv /usr/bin/labyrtool $WIDIR/.yr/
-         sudo cp -rv /usr/bin/labyrinth $WIDIR/.yr/
+         sudo cp -rv /.local/bin/labyrtool $WIDIR/.yr/
+         sudo cp -rv /.local/bin/labyrinth $WIDIR/.yr/
 	 cp -rv ~/.config/sxhkd/* $WIDIR/.xk/
 	 cp -rv ~/.config/warpd/config $WIDIR/.xt/
 	 cp -rv ~/.config/hints/config.json $WIDIR/.xt/config.hints.json
 	 cp -rv ~/.config/dunst/dunstrc $WIDIR/.xt/
-	 cp -rv ~/.zshrc $WIDIR/.xt/
+	 cp -rv ~/.config/polybar/config.ini $WIDIR/.xt/polybar.config.ini
+	 cp -rv ~/.local/bin/foxtag $WIDIR/.xt/
 	 cp -rv ~/.config/dmenu-frecency/config.json $WIDIR/.xt/dmenu-frecency.config.json
 	 cp -rv ~/.config/polybar/config.ini $WIDIR/.xt/polybar.config.ini 
 	 cp -rv ~/.Xresources $WIDIR/.xt/
 	 sudo cp -rv /usr/share/dwmbar/ $WIDIR/.xt/
 	;;
 
-  -ubk) # dont run this either...
+  -ubk)  # dont run this either... yet.
+
+	 sudo cp -rv $WIDIR/.yr/labyrinth ~/.local/bin/
+	 sudo cp -rv $WIDIR/.yr/labyrtool ~/.local/bin/
 	 sudo cp -rv $WIDIR/.xt/dwmbar /usr/share/
+	 mkdir -p ~/.config/polybar/
 	 cp -rv $WIDIR/.xt/ ~/.config/polybar/config.ini
+	 mkdir -p ~/.config/dmenu-frecency/
 	 cp -rv $WIDIR/.xt/dmenu-frecency.config.json ~/.config/dmenu-frecency/config.json
-	 cp -rv $WIDIR/.xt/zshrc ~/.zshrc
+	 #cp -rv $WIDIR/.xt/zshrc ~/.zshrc 
+	 #^replace with alias file that is then sourced by zshrc
+	 mkdir -p ~/.config/dunst/
 	 cp -rv $WIDIR/.xt/dunstrc ~/.config/dunst/
+	 mkdir -p ~/.config/hints/
 	 cp -rv $WIDIR/.xt/config.hints.json ~/.config/hints/config.json
+	 mkdir -p ~/.config/warpd/
 	 cp -rv $WIDIR/.xt/config ~/.config/warpd/
 	 cp -rv $WIDIR/.xk/* ~/.config/sxhkd/
-	 sudo cp -rv $WIDIR/.yr/labyrinth /usr/bin/
-	 sudo cp -rv $WIDIR/.yr/labyrtool /usr/bin/	
+	 mkdir -p ~/.config/lf/
+	 cp -rv $WIDIR/.xt/.lf/* ~/.config/lf/
+	 cp -rv $WIDIR/.xt/foxtag ~/.local/bin/
 
         ;;
 
