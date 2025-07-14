@@ -1,0 +1,23 @@
+set ratios 1:2:3
+set cleaner ~/.config/lf/cleaner
+set nohidden
+set preview true
+set previewer ~/.config/lf/preview 
+set sixel true
+set incsearch true
+
+cmd fzf_jump ${{
+    #res="$(find * | fzf --header='Jump to location')"
+    res="$(fzf --walker=file,dir,follow,hidden --walker-skip=.git,node_modules,.Trash)"
+    if [ -n "$res" ]; then
+        if [ -d "$res" ]; then
+            cmd="cd"
+        else
+            cmd="select"
+        fi
+        res="$(printf '%s' "$res" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+        lf -remote "send $id $cmd \"$res\""
+    fi
+}}
+
+map <c-o> :fzf_jump
