@@ -63,7 +63,7 @@ wideps() { # ignore this
             ;;
 	"Arch")
 	    
-            sudo pacman -S base-devel libx11 libxft libxinerama xorg-server xorg-xinit git python cairo pkgconf gobject-introspection gtk4 python-pipx pasystray dunst 7z nitrogen lf xsel mpv cmus nmtui glances brightnessctl rxvt-unicode rofi dmenu slock newsboat vim gtk-layer-shell grim libwnck3 beets
+            sudo pacman -S base-devel libx11 libxft libxinerama xorg-server xorg-xinit git python cairo pkgconf gobject-introspection gtk4 python-pipx pasystray dunst 7z nitrogen lf xsel mpv cmus nmtui glances brightnessctl rxvt-unicode rofi dmenu slock newsboat vim gtk-layer-shell grim libwnck3 beets yajl freetype2
 	    yay -S warpd dmenufm emojimenu bluetuith bmon bandwhich clipse dmenu-frecency aerc kpmenu pulsemixer
             [ $XDG_SESSION_TYPE = "x11" ]
 	    pipx ensurepath && \
@@ -258,8 +258,7 @@ case "$1" in
 
 
   -ubk)  # dont run this either... yet.
-
-	 wideps() $2
+         wideps $2
 	 sudo cp -rv $WIDIR/.yr/labyrinth ~/.local/bin/
 	 sudo cp -rv $WIDIR/.yr/labyrtool ~/.local/bin/
 	 sudo cp -rv $WIDIR/.xt/dwmbar /usr/share/
@@ -283,7 +282,7 @@ case "$1" in
 
    --edit)
         
-       $LABYRTERM -e vim ~/.local/bin/labyrtool
+       vim ~/.local/bin/labyrtool
 
        ;;
 
