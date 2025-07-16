@@ -259,7 +259,7 @@ case "$1" in
 
   -ubk)  # dont run this either... yet.
 
-	 wideps()
+	 wideps() $2
 	 sudo cp -rv $WIDIR/.yr/labyrinth ~/.local/bin/
 	 sudo cp -rv $WIDIR/.yr/labyrtool ~/.local/bin/
 	 sudo cp -rv $WIDIR/.xt/dwmbar /usr/share/
