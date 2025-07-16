@@ -1,13 +1,12 @@
 #!/bin/bash
-# Define the paths to your configuration files
 LABYRDIR="$HOME/.config/sxhkd"
-VIM_MODE="$LABYRDIR/vim"           # Main configuration file
-MODE_FILE="$LABYRDIR/current_mode" # File to store the current mode
+VIM_MODE="$LABYRDIR/vim"     
+MODE_FILE="$LABYRDIR/current_mode" 
 DEBUG_MODE="$LABYRDIR/debug"
 SECURITY_MODE="$LABYRDIR/security"
 VIDEO_MODE="$LABYRDIR/video"
 AUDIO_MODE="$LABYRDIR/audio"
-SYSTEM_MODE="$LABYRDIR/system"     # Monitoring system internals. 
+SYSTEM_MODE="$LABYRDIR/system"     
 NETWORK_MODE="$LABYRDIR/network"
 GAME_MODE="$LABYRDIR/game"
 TASK_MODE="$LABYRDIR/task"
@@ -15,28 +14,24 @@ INSERT_MODE="$LABYRDIR/ins"
 CONFIG_MODE="$LABYRDIR/config"
 VIM_INS="$LABYRDIR/vi"
 
-# Function to restart sxhkd with a specified configuration
 restart_sxhkd() {
     local config_file="$1"
-    # Kill any running instance of sxhkd
     killall sxhkd &
     dunst &
 
     sleep 0.1 &
     
-    # Start sxhkd with the specified configuration file
     sxhkd -c "$config_file" &
 
 }
 
 
-# Function to toggle between modes
 toggle_mode() {
 
     if [[ -f "$MODE_FILE" ]]; then
         current_mode=$(cat "$MODE_FILE")
     else
-        current_mode="VIM"  # Default to insert mode if no file exists
+        current_mode="VIM"  
     fi
 
     if [[ "$current_mode" == "INS" ]]; then
@@ -51,24 +46,22 @@ toggle_mode() {
     fi
 }
 
-# Function to show the current mode
 show_current_mode() {
     if [[ -f "$MODE_FILE" ]]; then
         current_mode=$(cat "$MODE_FILE")
     else
-        current_mode="VIM"  # Default to vim mode if no file exists
+        current_mode="VIM"  
     fi
-    notify-send "MODE: $current_mode"
+    
 }
 
-# Check for flags
 case "$1" in
 
     -v)
 
         restart_sxhkd "$VIM_MODE" 
         CURRENT_MODE='vim' 
-        echo "vim" > "$MODE_FILE" 
+        echo "normal" > "$MODE_FILE" 
         notify-send "NORMAL" 
         ;;
 
@@ -166,7 +159,7 @@ case "$1" in
         echo "  -a: AUDIO MODE ENABLE"
         echo "  -V: VIDEO MODE ENABLE"
         echo "  -d: DEBUG MODE ENABLE"
-	    echo "  -n: NETWORK MODE ENABLE"
+	echo "  -n: NETWORK MODE ENABLE"
         echo "  -t: TASK MODE ENABLE" 
         echo "  -S: SYSTEM MODE ENABLE"
         echo "  -H: SHOW CURRENT MODE"
@@ -174,7 +167,7 @@ case "$1" in
 
     *)
         restart_sxhkd "$VIM_MODE" 
-        echo "vim" > "$MODE_FILE" 
+        echo "normal" > "$MODE_FILE" 
         notify-send "VIM" 
         ;; 
 

@@ -1,9 +1,8 @@
 #!/bin/bash
 
-
 LABYRDIR="$HOME/.labyrinth/"
-LABYRTERM="alacritty"
-LABYRMU="alacritty -e cmus"
+LABYRTERM="urxvt"
+LABYRMU="urxvt -e cmus"
 LABYRMPC="vimpc"
 LABYRTERM2='xterm'
 MUREMOTE="mpc"
@@ -33,7 +32,7 @@ wideps() { # ignore this
 	    pipx install git+https://github.com/AlfredoSequeida/hints.git
             ;;
         "Fedora")
-            sudo dnf groupinstall "Development Tools" && sudo dnf install libX11-devel libXft-devel libXinerama-devel xorg-x11-server-Xorg xorg-x11-xinit git gcc gobject-introspection-devel cairo-gobject-devel pkg-config python3-devel gtk4 pipx
+            sudo dnf groupinstall "Development Tools" && sudo dnf install libX11-devel libXft-devel libXinerama-devel xorg-x11-server-Xorg xorg-x11-xinit git gcc gobject-introspection-devel cairo-gobject-devel pkg-config python3-devel gtk4 pipx pasystray
 	    [ $XDG_SESSION_TYPE = "wayland" ] && sudo dnf install gtk-layer-shell grim
             pipx ensurepath && \
             pipx install git+https://github.com/AlfredoSequeida/hints.git
@@ -64,9 +63,9 @@ wideps() { # ignore this
             ;;
 	"Arch")
 	    
-            sudo pacman -S base-devel libx11 libxft libxinerama xorg-server xorg-xinit git python cairo pkgconf gobject-introspection gtk4 python-pipx pasystray dunst 7z
-	    yay -S warpd 
-            [ $XDG_SESSION_TYPE = "wayland" ] && sudo pacman -S gtk-layer-shell grim || sudo pacman -S libwnck3
+            sudo pacman -S base-devel libx11 libxft libxinerama xorg-server xorg-xinit git python cairo pkgconf gobject-introspection gtk4 python-pipx pasystray dunst 7z nitrogen lf xsel mpv cmus nmtui glances brightnessctl rxvt-unicode rofi dmenu slock newsboat vim gtk-layer-shell grim libwnck3 beets
+	    yay -S warpd dmenufm emojimenu bluetuith bmon bandwhich clipse dmenu-frecency aerc kpmenu pulsemixer
+            [ $XDG_SESSION_TYPE = "x11" ]
 	    pipx ensurepath && \
 	    pipx install git+https://github.com/AlfredoSequeida/hints.git
             ;;
@@ -121,37 +120,90 @@ case "$1" in
         notify-send $LABYRMODE
         ;;
 
+    -se)
+	MENU="dmenu"
+	
+	FILE="$WIDIR/.xt/.urlquery"
+	
+	if [ ! -f $FILE ]; then
+	    touch $FILE
+	fi
+	
+	FILEOPT=$(cat $FILE)
+	
+	OPTIONS="
+	[
+	${FILEOPT}
+	[ \"+\", \"\" ],
+	[ \"-\",  \"\" ]
+	]
+	"
+	
+	OBJ_LENGTH=$(echo $OPTIONS | jq length)
+	OBJ_MENU=$(echo $OPTIONS | jq -r ".[][0]" | $MENU -i -nb black -nf white -sb white -sf black -p "::search")
+	OBJ_SELECTED=$(echo $OBJ_MENU | cut -d' ' -f1)
+	OBJ_KEYWORDS=$(echo $OBJ_MENU | cut -d' ' -f2- | tr " " "+")
+	
+	add_query() {
+	    PREFIXMENU=$(echo "" | dmenu -nb black -nf white -sb white -sf black -p "Add prefix menu:" <&-)
+	    if [ ! -z $PREFIXMENU ]; then
+	        URLQUERY=$(echo "" | dmenu -p -nb black -nf white -sb white -sf black "Add url query:" <&-)
+	        echo "[ \"$PREFIXMENU\", \"$URLQUERY\" ]," >> $FILE
+	    fi
+	    exit
+	}
+	
+	delete_query() {
+	    OBJ_MENU=$(echo $OPTIONS | jq -r ".[][0]" | head -n -2 | $MENU -i -p "Delete Menu:")
+	    OBJ_SELECTED=$OBJ_MENU
+	    if [ ! -z $OBJ_SELECTED ]; then
+	        CONFIRM_DELETE=$(echo -e "no\nyes" | dmenu -nb black -nf white -sb white -sf black -p "Do you want to delete this url?")
+	        if [ $CONFIRM_DELETE = "yes" ]; then
+	            sed -i "/$OBJ_SELECTED/d" $FILE
+	        fi
+	    fi
+	    exit
+	}
+	
+	main() {
+	    for i in $(seq 0 $((OBJ_LENGTH - 1))); do
+	        if [ $OBJ_SELECTED = "+" ]; then
+	            add_query
+	        fi
+	
+	        if [ $OBJ_SELECTED = "-" ]; then
+	            delete_query
+	        fi
+		
+	        if [ $OBJ_SELECTED = $(echo $OPTIONS | jq -r --arg i $i '.[($i|tonumber)][0]') ]; then
+	            URLQUERY=$(echo $OPTIONS | jq -r --arg i $i '.[($i|tonumber)][1]')
+	            KEYWORDS=$(echo $OBJ_KEYWORDS)
+	            $LABYRWEB "${URLQUERY}${KEYWORDS}" 2> /dev/null
+	        fi
+	    done
+	}
+	
+	main
+	;;
+
     -sf)
 	
         shotgun - | xclip -selection clipboard -t image/png
-        
-        option=$(echo -e "Yes\nNo" | dmenu -i -p "::save")
-        if echo "$option" | grep -q "Yes"; then
-            filename=$(echo | dmenu -p "Enter filename:") && \
-            filename=${filename:-$(date +%s)} && \
-            mkdir -p $WIDIR/.rec/img
-            
-            shotgun $WIDIR/.rec/img/"$filename.png"
-        fi
-
+        filename=${filename:-$(date +%s)} && \
+        mkdir -p $WIDIR/.rec/img/
+        shotgun $WIDIR/.rec/img/"$filename.png"
         ;;
-
 
     -ss)
+
         selection=$(hacksaw -f "-i %i -g %g")
-        
         shotgun $selection - | xclip -selection clipboard -t image/png
-        
-        option=$(echo -e "Yes\nNo" | dmenu -i -p "::save")
-        
-        if echo "$option" | grep -q "Yes"; then
-            filename=$(echo | dmenu -p "Enter filename:") && \
-            filename=${filename:-$(date +%s)} && \
-            mkdir -p $WIDIR/.rec/img
-            
-            shotgun $selection $WIDIR/.rec/img/"$filename.png"
-        fi
+        filename=${filename:-$(date +%s)} && \
+        mkdir -p $WIDIR/.rec/img
+        shotgun $selection $WIDIR/.rec/img/"$filename.png"
+
         ;;
+
 
    -sv)
 
@@ -175,10 +227,9 @@ case "$1" in
     	        -c:v h264        \
     	        -pix_fmt yuv420p \
     	        -crf 20          \
-    	        -f alsa          \
-		-i default       \
-    	        "$dir/$current.mp4" && \
-                ffmpeg -f alsa -i default -af "afftdn=nf=-75"
+    	        -f pulse -i default \
+    	        "$dir/$current.mp4" & \
+		
     		}
 	;;
 
@@ -190,58 +241,51 @@ case "$1" in
 
     	;;
    
-   -bk)
+   -bk) # probably dont run this, yet...
          sudo cp -rv /.local/bin/labyrtool $WIDIR/.yr/
          sudo cp -rv /.local/bin/labyrinth $WIDIR/.yr/
 	 cp -rv ~/.config/sxhkd/* $WIDIR/.xk/
+	 cp -rv ~/.config/warpd/config $WIDIR/.xt/
+	 cp -rv ~/.config/hints/config.json $WIDIR/.xt/config.hints.json
 	 cp -rv ~/.config/dunst/dunstrc $WIDIR/.xt/
-        ;;
+	 cp -rv ~/.config/polybar/config.ini $WIDIR/.xt/polybar.config.ini
+	 cp -rv ~/.local/bin/foxtag $WIDIR/.xt/
+	 cp -rv ~/.config/dmenu-frecency/config.json $WIDIR/.xt/dmenu-frecency.config.json
+	 cp -rv ~/.config/polybar/config.ini $WIDIR/.xt/polybar.config.ini 
+	 cp -rv ~/.Xresources $WIDIR/.xt/
+	 sudo cp -rv /usr/share/dwmbar/ $WIDIR/.xt/
+	;;
+
+
+  -ubk)  # dont run this either... yet.
+
+	 wideps()
+	 sudo cp -rv $WIDIR/.yr/labyrinth ~/.local/bin/
+	 sudo cp -rv $WIDIR/.yr/labyrtool ~/.local/bin/
+	 sudo cp -rv $WIDIR/.xt/dwmbar /usr/share/
+	 mkdir -p ~/.config/polybar/
+	 cp -rv $WIDIR/.xt/ ~/.config/polybar/config.ini
+	 mkdir -p ~/.config/dmenu-frecency/
+	 cp -rv $WIDIR/.xt/dmenu-frecency.config.json ~/.config/dmenu-frecency/config.json
+	 #cp -rv $WIDIR/.xt/zshrc ~/.zshrc 
+	 #^replace with alias file that is then sourced by zshrc
+	 mkdir -p ~/.config/dunst/
+	 cp -rv $WIDIR/.xt/dunstrc ~/.config/dunst/
+	 mkdir -p ~/.config/hints/
+	 cp -rv $WIDIR/.xt/config.hints.json ~/.config/hints/config.json
+	 mkdir -p ~/.config/warpd/
+	 cp -rv $WIDIR/.xt/config ~/.config/warpd/
+	 cp -rv $WIDIR/.xk/* ~/.config/sxhkd/
+	 mkdir -p ~/.config/lf/
+	 cp -rv $WIDIR/.xt/.lf/* ~/.config/lf/
+	 cp -rv $WIDIR/.xt/foxtag ~/.local/bin/
+         ;;
 
    --edit)
         
-       sudo -e /usr/bin/labyrtool
+       $LABYRTERM -e vim ~/.local/bin/labyrtool
 
        ;;
 
-#   --install)
-#	
-#       	 if [ -f /etc/os-release ]; then
-#	     . /etc/os-release
-#	     case "$ID_LIKE" in
-#	         "gentoo")
-#	             wideps "Gentoo"
-#	             ;;
-#	         "debian")
-#	             wideps "Debian"
-#	             ;;
-#	         "fedora")
-#	             wideps "Fedora"
-#	             ;;
-#	         "alpine")
-#	             wideps "Alpine"
-#	             ;;
-#	         "slackware")
-#	             wideps "Slackware"
-#	             ;;
-#	         "openbsd")
-#	             wideps "OpenBSD"
-#	             ;;
-#	         "freebsd")
-#	             wideps "FreeBSD"
-#	             ;;
-#	         "void")
-#	             wideps "Void"
-#	             ;;
-#	         "nixos")
-#	             wideps "NixOS"
-#	             ;;
-#	         "opensuse-leap" | "opensuse-tumbleweed")
-#	             wideps "openSUSE"
-#	 	    ;;
-#	         "arch" | "endeavouros" | "cachyos" )
-#	             wideps "Arch"
-#	             ;;
-#	     esac
-#        fi
 	
 esac 
