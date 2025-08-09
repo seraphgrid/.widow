@@ -1,8 +1,8 @@
 #!/bin/bash
 
 LABYRDIR="$HOME/.labyrinth/"
-LABYRTERM="urxvt"
-LABYRMU="urxvt -e cmus"
+LABYRTERM="xterm -s -e vim -c terminal"
+LABYRMU="xterm -s -e cmus"
 LABYRMPC="vimpc"
 LABYRTERM2='xterm'
 MUREMOTE="mpc"
@@ -58,16 +58,16 @@ wideps() { # ignore this
         "NixOS")
             nix-env -iA nixos.gcc nixos.gnumake nixos.autoconf nixos.automake nixos.libX11 nixos.libXft nixos.libXinerama nixos.xorg.xorgserver nixos.xorg.xinit
             ;;
-        "openSUSE")
+        "OpenSUSE")
             sudo zypper install -t pattern devel_basis && sudo zypper install libX11-devel libXft-devel libXinerama-devel xorg-x11-server xorg-x11-xinit
             ;;
-	"Arch")
-	    
-            sudo pacman -S base-devel libx11 libxft libxinerama xorg-server xorg-xinit git python cairo pkgconf gobject-introspection gtk4 python-pipx pasystray dunst 7z nitrogen lf xsel mpv cmus nmtui glances brightnessctl rxvt-unicode rofi dmenu slock newsboat vim gtk-layer-shell grim libwnck3 beets yajl freetype2
-	    yay -S warpd dmenufm emojimenu bluetuith bmon bandwhich clipse dmenu-frecency aerc kpmenu pulsemixer
+	"Arch") 
+            sudo pacman -S base-devel libx11 libxft libxinerama xorg-server xorg-xinit git python cairo pkgconf gobject-introspection gtk4 python-pipx pasystray dunst 7z nitrogen lf xsel mpv cmus nmtui glances brightnessctl rxvt-unicode rofi dmenu slock newsboat vim gtk-layer-shell libwnck3 beets yajl freetype2 hacksaw shotgun yay network-manager-applet dwmbar kanata polybar 
+	    yay -S warpd dmenufm emojimenu bluetuith bmon bandwhich clipse dmenu-frecency aerc kpmenu pulsemixer pasystray-git xban
             [ $XDG_SESSION_TYPE = "x11" ]
 	    pipx ensurepath && \
-	    pipx install git+https://github.com/AlfredoSequeida/hints.git
+	    pipx install git+https://github.com/AlfredoSequeida/hints.git && \ 
+            pipx install calcure
             ;;
         *)
             echo "Unsupported distribution or package manager."
@@ -278,13 +278,18 @@ case "$1" in
 	 mkdir -p ~/.config/lf/
 	 cp -rv $WIDIR/.xt/.lf/* ~/.config/lf/
 	 cp -rv $WIDIR/.xt/foxtag ~/.local/bin/
+	 cp -rv $WIDIR/.xt/wiconv ~/.local/bin/
+	 cp -rv $WIDIR/.xt/slmenu ~/.local/bin/
+	 cp -rv $WIDIR/.xt/slmenu ~/.local/bin/
+	 cd $WIDIR/.src
+         sudo make clean install
+	 cd $WIDIR
          ;;
 
-   --edit)
+   -EE)
         
        vim ~/.local/bin/labyrtool
 
        ;;
-
 	
 esac 
