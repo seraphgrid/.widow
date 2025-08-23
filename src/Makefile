@@ -57,12 +57,12 @@ endif
 	sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	mkdir -p ${DESTDIR}${PREFIX}/share/xsessions
-	test -f ${DESTDIR}${PREFIX}/share/xsessions/dwm.desktop || cp -n dwm.desktop ${DESTDIR}${PREFIX}/share/xsessions
-	chmod 644 ${DESTDIR}${PREFIX}/share/xsessions/dwm.desktop
+	test -f ${DESTDIR}${PREFIX}/share/xsessions/widow.desktop || cp -n widow.desktop ${DESTDIR}${PREFIX}/share/xsessions
+	chmod 644 ${DESTDIR}${PREFIX}/share/xsessions/widow.desktop
 
 uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
 		${DESTDIR}${MANPREFIX}/man1/dwm.1\
-		${DESTDIR}${PREFIX}/share/xsessions/dwm.desktop
+		${DESTDIR}${PREFIX}/share/xsessions/widow.desktop
 
 .PHONY: all clean dist install uninstall
