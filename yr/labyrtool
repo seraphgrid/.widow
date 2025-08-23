@@ -1,7 +1,7 @@
-#!/bin/bash
+#r!/bin/bash
 
 LABYRDIR="$HOME/.labyrinth/"
-LABYRTERM="xterm -s -e vim -c terminal"
+LABYRTERM="xterm -s"
 LABYRMU="xterm -s -e cmus"
 LABYRMPC="vimpc"
 LABYRTERM2='xterm'
@@ -237,6 +237,7 @@ case "$1" in
 
    	   directory=$WIDIR/.rec/au
    	   date=$(date +%F_%H-%M-%S)
+	   mkdir -p $directory
            $LABYRTERM -e ffmpeg -f alsa -i default "$directory/$date".wav
 
     	;;
