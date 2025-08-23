@@ -258,7 +258,7 @@ case "$1" in
 	;;
 
 
-  -ubk)  # dont run this either... yet.
+  -ubk)  # the installation of files is complete. all files are moved to where their supposed 2 be.
          wideps $2
 	 sudo cp -rv $WIDIR/.yr/labyrinth ~/.local/bin/
 	 sudo cp -rv $WIDIR/.yr/labyrtool ~/.local/bin/
