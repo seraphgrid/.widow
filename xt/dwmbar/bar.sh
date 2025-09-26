@@ -47,10 +47,10 @@ run_module()
 	fi
 
 	if [[ "$out" = " " ]]; then
-		echo "" > "$OUTPUT_CACHE$module"
+		echo "" > "$OUTPUT_CACHE$module" &
 	elif [[ ! "$out" = "" ]]; then
 		out="$out$SEPARATOR."
-		echo "$out" > "$OUTPUT_CACHE$module"
+		echo "$out" > "$OUTPUT_CACHE$module" & 
 	fi
 }
 
@@ -58,17 +58,17 @@ run()
 {
 	for module in $MODULES; do
 		[[ ! -f "$OUTPUT_CACHE$module" ]] && touch "$OUTPUT_CACHE$module"
-		pgrep "$module" &> /dev/null
+		pgrep "$module" &> /dev/null &
 		notrunning=$([[ $? -eq 1 ]])
 		if $notrunning && [[ $INTERNET -eq 0 ]]; then
-			run_module "$module"
+			run_module "$module" &
 		elif $notrunning && [[ $INTERNET -eq 1 ]]; then
-			[[ "$ONLINE_MODULES" != *"$module"* ]] && run_module "$module"
+			[[ "$ONLINE_MODULES" != *"$module"* ]] && run_module "$module" &
 		fi
 	done
 
 	get_bar
-	sleep "$DELAY";
+#	sleep "$DELAY";
 }
 
 run

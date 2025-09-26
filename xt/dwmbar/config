@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # What modules, in what order
-MODULES="timer cmus volume cputemp time"
+MODULES="keymode timer cmus volume cputemp time"
 # ram is cool
 # cpuload is cool
 
@@ -9,7 +9,7 @@ MODULES="timer cmus volume cputemp time"
 ONLINE_MODULES="weather internet"
 
 # Delay between showing the status bar
-DELAY="1"
+DELAY="0.1"
 
 # Where the custom modules are stored
 CUSTOM_DIR="/home/$USER/.config/dwmbar/modules/custom"
