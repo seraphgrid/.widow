@@ -1,30 +1,34 @@
-/* Helper macros for spawning commands */
+///* Helper macros for spawning commands */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 #define CMD(...)   { .v = (const char*[]){ __VA_ARGS__, NULL } }
 #include <X11/XF86keysym.h>
 
+// aaaaff
+
 /* appearance */
-static const unsigned int borderpx       = 1;   /* border pixel of windows */
-static const unsigned int snap           = 32;  /* snap pixel */
-static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
-static const int scalepreview            = 4;        /* Tag preview scaling */
-static int nomodbuttons                  = 1;   /* allow client mouse button bindings that have no modifier */
-static const unsigned int gappih         = 20;  /* horiz inner gap between windows */
-static const unsigned int gappiv         = 10;  /* vert inner gap between windows */
-static const unsigned int gappoh         = 10;  /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov         = 30;  /* vert outer gap between windows and screen edge */
-static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
-static const int usealtbar               = 0;        /* 1 means use non-dwm status bar */
-static const char *altbarclass           = "Polybar"; /* Alternate bar class name */
-static const char *altbarcmd             = "$HOME/bar.sh"; /* Alternate bar launch command */
-static const int showbar                 = 1;   /* 0 means no bar */
-static const int topbar                  = 1;   /* 0 means bottom bar */
+static const unsigned int borderpx  = 1;   /* border pixel of windows */
+static const unsigned int snap      = 32;  /* snap pixel */
+static const int swallowfloating    = 0;   /* 1 means swallow floating windows by default */
+static const int scalepreview       = 4;        /* Tag preview scaling */
+static int nomodbuttons             = 1;   /* allow client mouse button bindings that have no modifier */
+static const unsigned int gappih    = 20;  /* horiz inner gap between windows */
+static const unsigned int gappiv    = 10;  /* vert inner gap between windows */
+static const unsigned int gappoh    = 10;  /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 30;  /* vert outer gap between windows and screen edge */
+static const int smartgaps_fact     = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
+static const int usealtbar          = 0;        /* 1 means use non-dwm status bar */
+static const char *altbarclass   = "Polybar"; /* Alternate bar class name */
+static const char *altbarcmd     = "$HOME/bar.sh"; /* Alternate bar launch command */
+static const int showbar  = 1;   /* 0 means no bar */
+static const int topbar   = 1;   /* 0 means bottom bar */
+
 /*  Display modes of the tab bar: never shown, always shown, shown only in  */
 /*  monocle mode in the presence of several windows.                        */
 /*  Modes after showtab_nmodes are disabled.                                */
+
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always};
 static const int showtab                 = showtab_auto;        /* Default tab bar show mode */
-static const int toptab                  = False;               /* False means bottom tab bar */
+static const int toptab                  = True;               /* False means bottom tab bar */
 static const int bar_height              = 0;   /* 0 means derive from font, >= 1 explicit height */
 static int floatposgrid_x                = 5;  /* float grid columns */
 static int floatposgrid_y                = 5;  /* float grid rows */
@@ -59,8 +63,8 @@ static const unsigned int maxhtab          = 200;  /* tab menu height */
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
-static const char font[]                 = "Liberation Mono 10";
-static const char dmenufont[]            = "Liberation Mono:size=10";
+static const char font[]                 = "Terminus 9";
+static const char dmenufont[]            = "Terminus:size=9";
 
 
 static char c000000[]                    = "#000000"; // placeholder value
@@ -72,7 +76,7 @@ static char normfloatcolor[]             = "#01d080"; // Normal floating window 
 
 static char selfgcolor[]                 = "#930000"; // Selected window text color (foreground).
 static char selbgcolor[]                 = "#000000"; // Selected window background color.
-static char selbordercolor[]             = "#ffffff"; // Selected window border color.
+static char selbordercolor[]             = "#aaaaff"; // Selected window border color.
 static char selfloatcolor[]              = "#005577"; // Selected floating window color.
 
 static char titlenormfgcolor[]           = "#000000"; // Normal title bar text color (foreground).
@@ -80,14 +84,14 @@ static char titlenormbgcolor[]           = "#ffffff"; // Normal title bar backgr
 static char titlenormbordercolor[]       = "#ffffff"; // Normal title bar border color.
 static char titlenormfloatcolor[]        = "#ffffff"; // Normal title bar color for floating windows.
 
-static char titleselfgcolor[]            = "#87ce74"; // Selected title bar text color (foreground).
+static char titleselfgcolor[]            = "#000000"; // Selected title bar text color (foreground).
 static char titleselbgcolor[]            = "#ffffff"; // Selected title bar background color.
 static char titleselbordercolor[]        = "#ffffff"; // Selected title bar border color.
 static char titleselfloatcolor[]         = "#ffffff"; // Selected title bar color for floating windows.
 
-static char tagsnormfgcolor[]            = "#000000"; // Normal tag text color (foreground).
-static char tagsnormbgcolor[]            = "#ffffff"; // Normal tag background color.
-static char tagsnormbordercolor[]        = "#930000"; // Normal tag border color.
+static char tagsnormfgcolor[]            = "#ffffff"; // Normal tag text color (foreground).
+static char tagsnormbgcolor[]            = "#000000"; // Normal tag background color.
+static char tagsnormbordercolor[]        = "#ffffff"; // Normal tag border color.
 static char tagsnormfloatcolor[]         = "#ffffff"; // Normal tag color for floating windows.
 
 static char tagsselfgcolor[]             = "#000000"; // Selected tag text color (foreground).
@@ -154,48 +158,49 @@ static const unsigned int borderalpha = 0;
 static const unsigned int alphas[][3] = {
 	/*                       fg      bg        border     */
 	[SchemeNorm]         = { OPAQUE, baralpha, OPAQUE },
-	[SchemeSel]          = { OPAQUE, baralpha, borderalpha },
-	[SchemeTitleNorm]    = { OPAQUE, baralpha, borderalpha },
-	[SchemeTitleSel]     = { OPAQUE, baralpha, borderalpha },
-	[SchemeTagsNorm]     = { OPAQUE, baralpha, borderalpha }, [SchemeTagsSel]      = { OPAQUE, baralpha, borderalpha },
-	[SchemeHidNorm]      = { OPAQUE, baralpha, borderalpha },
-	[SchemeHidSel]       = { OPAQUE, baralpha, borderalpha },
-	[SchemeUrg]          = { OPAQUE, baralpha, borderalpha },
-	[SchemeScratchSel]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeScratchNorm] = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActTTB]   = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActLTR]   = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActMONO]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActGRID]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActGRD1]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActGRD2]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActGRDM]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActHGRD]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActDWDL]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActSPRL]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActFloat] = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaTTB]   = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaLTR]   = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaMONO]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaGRID]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaGRD1]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaGRD2]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaGRDM]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaHGRD]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaDWDL]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaSPRL]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaFloat] = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelTTB]   = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelLTR]   = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelMONO]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelGRID]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelGRD1]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelGRD2]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelGRDM]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelHGRD]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelDWDL]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelSPRL]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelFloat] = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]          = { OPAQUE, baralpha, OPAQUE },
+	[SchemeTitleNorm]    = { OPAQUE, baralpha, OPAQUE },
+	[SchemeTitleSel]     = { OPAQUE, baralpha, OPAQUE },
+	[SchemeTagsNorm]     = { OPAQUE, baralpha, OPAQUE }, 
+	[SchemeTagsSel]      = { OPAQUE, baralpha, OPAQUE },
+	[SchemeHidNorm]      = { OPAQUE, baralpha, OPAQUE },
+	[SchemeHidSel]       = { OPAQUE, baralpha, OPAQUE },
+	[SchemeUrg]          = { OPAQUE, baralpha, OPAQUE },
+	[SchemeScratchSel]  = { OPAQUE, baralpha,  OPAQUE },
+	[SchemeScratchNorm] = { OPAQUE, baralpha,  OPAQUE },
+	[SchemeFlexActTTB]   = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexActLTR]   = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexActMONO]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexActGRID]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexActGRD1]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexActGRD2]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexActGRDM]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexActHGRD]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexActDWDL]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexActSPRL]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexActFloat] = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexInaTTB]   = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexInaLTR]   = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexInaMONO]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexInaGRID]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexInaGRD1]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexInaGRD2]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexInaGRDM]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexInaHGRD]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexInaDWDL]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexInaSPRL]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexInaFloat] = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexSelTTB]   = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexSelLTR]   = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexSelMONO]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexSelGRID]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexSelGRD1]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexSelGRD2]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexSelGRDM]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexSelHGRD]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexSelDWDL]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexSelSPRL]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeFlexSelFloat] = { OPAQUE, baralpha, OPAQUE },
 };
 static const char title_bg_dark[]   = "#303030";
 static const char title_bg_light[]  = "#fdfdfd";
@@ -203,14 +208,14 @@ static const int color_ptrs[][ColCount] = {
 
         /*                       fg      bg      border  float */
   
-	[SchemeNorm]         = { -1,      0,      0,       7 }, // normfgcolor, normbgcolor, normbordercolor, normfloatcolork
-	[SchemeSel]          = { -1,     -1,     -1,     10 }, // selfgcolor,  selbgcolor,  selbordercolor,  selfloatcolor
-	[SchemeTitleNorm]    = { 6,      -1,     -1,     -1 }, // titlenormfgcolor, titlenormbgcolor, titlenormbordercolor, titlenormfloatcolor
-	[SchemeTitleSel]     = { 12,     -1,     -1,      -1 }, // titleselfgcolor, titleselbgcolor, titleselbordercolor, titleselfloatcolor
-	[SchemeTagsNorm]     = { 7,       0,      0,      -1 }, // tagsnormfgcolor, tagsnormbgcolor, tagsnormbordercolor, tagsnormfloatcolor
-	[SchemeTagsSel]      = { 0,      -1,      -1,     -1 }, // tagsselfgcolor, tagsselbgcolor,   tagsselbordercolor, tagsselfloatcolor
-	[SchemeHidNorm]      = { 5,       0,      0,      -1 }, // hidnormfgcolor, hidnormbgcolor, c000000,  c000000
-	[SchemeHidSel]       = { 6,      -1,     -1,     -1 }, // urgfgcolor, urgbgcolor, urgbordercolor, urgfloatcolor
+	[SchemeNorm]         = { 15,      8,      0,       7 }, // normfgcolor, normbgcolor, normbordercolor, normfloatcolork
+	[SchemeSel]          = { 8,     7,     -1,     10 }, // selfgcolor,  selbgcolor,  selbordercolor,  selfloatcolor
+	[SchemeTitleNorm]    = { 15,      -1,     -1,     -1 }, // titlenormfgcolor, titlenormbgcolor, titlenormbordercolor, titlenormfloatcolor
+	[SchemeTitleSel]     = { 8,     -1,     -1,      -1 }, // titleselfgcolor, titleselbgcolor, titleselbordercolor, titleselfloatcolor
+	[SchemeTagsNorm]     = { 15,       0,      0,      -1 }, // tagsnormfgcolor, tagsnormbgcolor, tagsnormbordercolor, tagsnormfloatcolor
+	[SchemeTagsSel]      = { 15,      -1,      -1,     -1 }, // tagsselfgcolor, tagsselbgcolor,   tagsselbordercolor, tagsselfloatcolor
+	[SchemeHidNorm]      = { 15,       0,      0,      -1 }, // hidnormfgcolor, hidnormbgcolor, c000000,  c000000
+	[SchemeHidSel]       = { 15,      -1,     -1,     -1 }, // urgfgcolor, urgbgcolor, urgbordercolor, urgfloatcolor
 	[SchemeUrg]          = { 9,       0,      9,      15 }, // urgfgcolor, urgbgcolor, urgbordercolor, urgfloatcolor
 
 };
@@ -220,7 +225,7 @@ static char *colors[][ColCount] = {
 	[SchemeNorm]         = { normfgcolor,      normbgcolor,      normbordercolor,      normfloatcolor },
 	[SchemeSel]          = { selfgcolor,       selbgcolor,       selbordercolor,       selfloatcolor },
 	[SchemeTitleNorm]    = { titlenormfgcolor, titlenormbgcolor, titlenormbordercolor, titlenormfloatcolor },
-	[SchemeTitleSel]     = { titleselfgcolor,  titleselbgcolor,  titleselbordercolor,  titleselfloatcolor },
+	[SchemeTitleSel]     = { titleselfgcolor,  titleselbgcolor,  normTTBbgcolor,  titleselfloatcolor },
 	[SchemeTagsNorm]     = { tagsnormfgcolor,  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor },
 	[SchemeTagsSel]      = { tagsselfgcolor,   tagsselbgcolor,   tagsselbordercolor,   tagsselfloatcolor },
 	[SchemeHidNorm]      = { hidnormfgcolor,   hidnormbgcolor,   c000000,              c000000 },
@@ -228,7 +233,7 @@ static char *colors[][ColCount] = {
 	[SchemeUrg]          = { urgfgcolor,       urgbgcolor,       urgbordercolor,       urgfloatcolor },
 	[SchemeScratchSel]  = { scratchselfgcolor, scratchselbgcolor, scratchselbordercolor, scratchselfloatcolor },
 	[SchemeScratchNorm] = { scratchnormfgcolor, scratchnormbgcolor, scratchnormbordercolor, scratchnormfloatcolor },
-	[SchemeFlexActTTB]   = { titleselfgcolor,  actTTBbgcolor,    actTTBbgcolor,        c000000 },
+	[SchemeFlexActTTB]   = { titleselfgcolor,  actTTBbgcolor,    normTTBbgcolor,        c000000 },
 	[SchemeFlexActLTR]   = { titleselfgcolor,  actLTRbgcolor,    actLTRbgcolor,        c000000 },
 	[SchemeFlexActMONO]  = { titleselfgcolor,  actMONObgcolor,   actMONObgcolor,       c000000 },
 	[SchemeFlexActGRID]  = { titleselfgcolor,  actGRIDbgcolor,   actGRIDbgcolor,       c000000 },
@@ -239,18 +244,18 @@ static char *colors[][ColCount] = {
 	[SchemeFlexActDWDL]  = { titleselfgcolor,  actDWDLbgcolor,   actDWDLbgcolor,       c000000 },
 	[SchemeFlexActSPRL]  = { titleselfgcolor,  actSPRLbgcolor,   actSPRLbgcolor,       c000000 },
 	[SchemeFlexActFloat] = { titleselfgcolor,  actfloatbgcolor,  actfloatbgcolor,      c000000 },
-	[SchemeFlexInaTTB]   = { titlenormfgcolor, normTTBbgcolor,   normTTBbgcolor,       c000000 },
-	[SchemeFlexInaLTR]   = { titlenormfgcolor, normLTRbgcolor,   normLTRbgcolor,       c000000 },
-	[SchemeFlexInaMONO]  = { titlenormfgcolor, normMONObgcolor,  normMONObgcolor,      c000000 },
-	[SchemeFlexInaGRID]  = { titlenormfgcolor, normGRIDbgcolor,  normGRIDbgcolor,      c000000 },
-	[SchemeFlexInaGRD1]  = { titlenormfgcolor, normGRD1bgcolor,  normGRD1bgcolor,      c000000 },
-	[SchemeFlexInaGRD2]  = { titlenormfgcolor, normGRD2bgcolor,  normGRD2bgcolor,      c000000 },
-	[SchemeFlexInaGRDM]  = { titlenormfgcolor, normGRDMbgcolor,  normGRDMbgcolor,      c000000 },
-	[SchemeFlexInaHGRD]  = { titlenormfgcolor, normHGRDbgcolor,  normHGRDbgcolor,      c000000 },
-	[SchemeFlexInaDWDL]  = { titlenormfgcolor, normDWDLbgcolor,  normDWDLbgcolor,      c000000 },
-	[SchemeFlexInaSPRL]  = { titlenormfgcolor, normSPRLbgcolor,  normSPRLbgcolor,      c000000 },
-	[SchemeFlexInaFloat] = { titlenormfgcolor, normfloatbgcolor, normfloatbgcolor,     c000000 },
-	[SchemeFlexSelTTB]   = { titleselfgcolor,  selTTBbgcolor,    selTTBbgcolor,        c000000 },
+	[SchemeFlexInaTTB]   = { normfgcolor, normTTBbgcolor,   normTTBbgcolor,       c000000 }, // titlenormfg
+	[SchemeFlexInaLTR]   = { normfgcolor, normLTRbgcolor,   normLTRbgcolor,       c000000 },
+	[SchemeFlexInaMONO]  = { normfgcolor, normMONObgcolor,  normMONObgcolor,      c000000 },
+	[SchemeFlexInaGRID]  = { normfgcolor, normGRIDbgcolor,  normGRIDbgcolor,      c000000 },
+	[SchemeFlexInaGRD1]  = { normfgcolor, normGRD1bgcolor,  normGRD1bgcolor,      c000000 },
+	[SchemeFlexInaGRD2]  = { normfgcolor, normGRD2bgcolor,  normGRD2bgcolor,      c000000 },
+	[SchemeFlexInaGRDM]  = { normfgcolor, normGRDMbgcolor,  normGRDMbgcolor,      c000000 },
+	[SchemeFlexInaHGRD]  = { normfgcolor, normHGRDbgcolor,  normHGRDbgcolor,      c000000 },
+	[SchemeFlexInaDWDL]  = { normfgcolor, normDWDLbgcolor,  normDWDLbgcolor,      c000000 },
+	[SchemeFlexInaSPRL]  = { normfgcolor, normSPRLbgcolor,  normSPRLbgcolor,      c000000 },
+	[SchemeFlexInaFloat] = { normfgcolor, normfloatbgcolor, normfloatbgcolor,     c000000 },
+	[SchemeFlexSelTTB]   = { titleselfgcolor,  selTTBbgcolor,   selbordercolor,        c000000 },
 	[SchemeFlexSelLTR]   = { titleselfgcolor,  selLTRbgcolor,    selLTRbgcolor,        c000000 },
 	[SchemeFlexSelMONO]  = { titleselfgcolor,  selMONObgcolor,   selMONObgcolor,       c000000 },
 	[SchemeFlexSelGRID]  = { titleselfgcolor,  selGRIDbgcolor,   selGRIDbgcolor,       c000000 },
@@ -280,14 +285,13 @@ static const char *layoutmenu_cmd = "layoutmenu.sh";
 
 static const Launcher launchers[] = {
 	/* icon to display      command        */
-	{ "l",               CMD("labyrinth", "-v") },	
+	{ "*",               CMD("labyrinth", "-v") },	
 };
 
 static const char *const autostart[] = {
 
 	"labyrinth", "-v", NULL,
-   	"pkill", "-f", "jamesdsp", NULL,
-    	"kdeconnect-indicator", NULL,	
+	"kanata", "-c", "/home/hexe/kanata.kbd", NULL,
     	"dunst", NULL,
     	"nitrogen", "--restore", NULL,
   	"dwmbar", NULL,
@@ -295,8 +299,7 @@ static const char *const autostart[] = {
     	"hintsd", NULL,
   	"pasystray", NULL, 
 	"nm-applet", NULL,
-	"jamesdsp", NULL,
-	NULL	
+	 NULL	
 
 };
 
@@ -369,6 +372,7 @@ static const Rule rules[] = {
 	RULE(.class = "Firefox", .tags = 1 << 7)
 	RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1)
 	RULE(.instance = "tk", .scratchkey = 's', .isfloating = 1)
+	//RULE(.class = "mpv", .scratchkey = 's', .isfloating = 1)
 };
 
 static const MonitorRule monrules[] = {
@@ -507,10 +511,12 @@ static const char *brightnessu[]   = { "brightnessctl", "set", "20%+", NULL };
 static const char *brightnessd[] = { "brightnessctl",  "set", "20%-", NULL };
 static const char *rofiwin[] = { "rofi", "-show", "window", NULL };
 static const char *slock[] = { "slock", NULL };
+static const char *micmute[] = { "amixer", "set", "'Capture", "Switch'", "toggle", NULL };
+static const char *labyres[] = { "labyrinth", "-v", NULL };
+
+
 
 //static const char *termcmd[]  = { "st", NULL };
-
-static const char *rofi[] = { "rofi", "-show", "drun", NULL };
 
 /* This defines the name of the executable that handles the bar (used for signalling purposes) */
 #define STATUSBAR "dwmblocks"
@@ -519,9 +525,12 @@ static const Key keys[] = {
 	/* modifier                     key            function                argument */
     //	{ MODKEY,                       XK_grave,                 spawn,        {.v = sendgrave }},
 	//	{ MODKEY|ControlMask,           XK_p,          riospawnsync,           {.v = dmenucmd } },
-//	{ MODKEY|ControlMask,           XK_Return,     riospawn,               {.v = termcmd } },
+	{ MODKEY|ControlMask,           XK_Return,     riospawn,               {.v = termcmd } },
 	{ 0,                            XF86XK_AudioRaiseVolume, spawn,        {.v = volup } },
-    { 0,                            XF86XK_AudioLowerVolume, spawn,        {.v = voldown }},
+        { 0,                            XF86XK_AudioLowerVolume, spawn,        {.v = voldown }},
+        { 0,                            XF86XK_AudioMicMute,     spawn,        {.v = micmute }},
+        { ControlMask,                  XK_F12,     spawn,        {.v = labyres }},
+		
 	{ MODKEY,                       XK_s,          rioresize,              {0} },
 	{ MODKEY,                       XK_b,          togglebar,              {0} },
 	{ MODKEY|ShiftMask,             XK_b,          toggletopbar,           {0} },
@@ -602,7 +611,7 @@ static const Key keys[] = {
 	{ MODKEY|ControlMask|ShiftMask, XK_q,          quit,                   {1} },
 	{ MODKEY,                       XK_u,          focusurgent,            {0} },
 	{ MODKEY,                       XK_t,          setlayout,              {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,          setlayout,              {.v = &layouts[1]} },
+	//{ MODKEY,                       XK_f,          setlayout,              {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,          setlayout,              {.v = &layouts[2]} },
 	{ MODKEY,                       XK_c,          setlayout,              {.v = &layouts[3]} },
 	{ MODKEY|ControlMask,           XK_t,          rotatelayoutaxis,       {.i = +1 } },   /* flextile, 1 = layout axis */
