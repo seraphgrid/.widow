@@ -14,13 +14,13 @@ Escape
  labyrinth -v
 
 d
- slmenu
+ labyrinth -I && slmenu
 
 e
  reaper
 
 m
- kitty -e cmus
+ urxvt -e cmus
 
 M
  foxtag
@@ -37,7 +37,7 @@ f
 q
  jamesdsp
 
-C
+ctrl + c
  wiconv
 
 # [beets]
