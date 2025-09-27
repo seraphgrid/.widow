@@ -1,9 +1,7 @@
 #!/bin/bash
 
 # What modules, in what order
-MODULES="keymode timer cmus volume cputemp time"
-# ram is cool
-# cpuload is cool
+MODULES="keymode timer volume cputemp time"
 
 # Modules that require an active internet connection
 ONLINE_MODULES="weather internet"
