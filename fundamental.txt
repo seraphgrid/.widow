@@ -1,7 +1,7 @@
 [what_people_do_on_their_computer]
 
 [] Create Manim animation (none)
-[] open pdf (none) 
+[] open pdf (none, should maybe leverage fzf or something) 
 [] redact screenshot (none, but will leverage gimp) 
 [] create new web app (none, fuck)
 [] crop image (none, but will leverage gimp) 
@@ -12,8 +12,8 @@
 [x] Play game (w for start menu) 
 [x] install browser (!) 
 [x] fix audio (o ; a/A) 
-[x] access clipboard history (z ; p)
-[x] use emoji (.) 
+[x] access clipboard history (z ; p) (need better clipboard manager for X11) 
+[x] use emoji (.)  
 [x] open text editor (I)
 
 [tmux]
