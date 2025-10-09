@@ -1,20 +1,17 @@
-#r!/bin/bash
+#!/bin/bash
 
 LABYRDIR="$HOME/.labyrinth/"
 LABYRTERM="xterm -s"
-LABYRMU="xterm -s -e cmus"
-LABYRMPC="vimpc"
-LABYRTERM2='xterm'
-MUREMOTE="mpc"
-LABYREDIT="$LABYRTERM2 -e vim"
+LABYRMU="$LABYRTERM -e cmus"
+MUREMOTE="cmus-remote"
+LABYREDIT="$LABYRTERM -e vim"
 LABYRGAL='nomacs'
 LABYRDAW='reaper'
 LABYRDAW2='bitwig-studio'
-LABYRWEB='qutebrowser'
-LABYRWAL='nitrogen'
-LABYRMODE=$(cat ~/.config/sxhkd/current_mode)
+LABYRWEB='mullvad-browser'
+LBYRWAL='nitrogen'
 LABYRFM="ranger"
-WIDIR="$HOME/.widow"
+WIDIR="$HOME/.config/widow"
 MUCOL="$HOME/Music/collection/rnd/"
 
 wideps() { # ignore this 
@@ -224,7 +221,7 @@ case "$1" in
                 -s "${w}x${h}"   \
     	        -i ":0.0+$x,$y"  \
     	        -preset slow     \
-    	        -c:v h264        \
+    	        -c:v libx264        \
     	        -pix_fmt yuv420p \
     	        -crf 20          \
     	        -f pulse -i default \
@@ -238,7 +235,7 @@ case "$1" in
    	   directory=$WIDIR/.rec/au
    	   date=$(date +%F_%H-%M-%S)
 	   mkdir -p $directory
-           $LABYRTERM -e ffmpeg -f alsa -i default "$directory/$date".wav
+           $LABYRTERM -e ffmpeg -f pulse -i default "$directory/$date".wav
 
     	;;
    
@@ -260,9 +257,11 @@ case "$1" in
 
   -ubk)  # dont run this either... yet.
          wideps $2
-	 sudo cp -rv $WIDIR/yr/labyrinth ~/.local/bin/
-	 sudo cp -rv $WIDIR/yr/labyrtool ~/.local/bin/
-	 sudo cp -rv $WIDIR/xt/dwmbar /usr/share/
+	 chmod +x $WIDIR/.yr/labyrinth
+	 chmod +x $WIDIR/.yr/labyrtool
+	 sudo cp -rv $WIDIR/.yr/labyrinth ~/.local/bin/
+	 sudo cp -rv $WIDIR/.yr/labyrtool ~/.local/bin/
+	 sudo cp -rv $WIDIR/.xt/dwmbar /usr/share/
 	 mkdir -p ~/.config/polybar/
 	 cp -rv $WIDIR/xt/polybar.config.json ~/.config/polybar/config.ini
 	 mkdir -p ~/.config/dmenu-frecency/
@@ -270,22 +269,23 @@ case "$1" in
 	 #cp -rv $WIDIR/.xt/zshrc ~/.zshrc 
 	 #^replace with alias file that is then sourced by zshrc
 	 mkdir -p ~/.config/dunst/
-	 cp -rv $WIDIR/xt/dunstrc ~/.config/dunst/
+	 cp -rv $WIDIR/.xt/dunstrc ~/.config/dunst/
 	 mkdir -p ~/.config/hints/
-	 cp -rv $WIDIR/xt/config.hints.json ~/.config/hints/config.json
+	 cp -rv $WIDIR/.xt/config.hints.json ~/.config/hints/config.json
 	 mkdir -p ~/.config/warpd/
-	 cp -rv $WIDIR/xt/config ~/.config/warpd/
-	 cp -rv $WIDIR/xk/* ~/.config/sxhkd/
+	 cp -rv $WIDIR/.xt/config ~/.config/warpd/
+	 cp -rv $WIDIR/.xk/* ~/.config/sxhkd/
 	 mkdir -p ~/.config/lf/
-	 cp -rv $WIDIR/xt/lfrc ~/.config/lf/
+	 cp -rv $WIDIR/.xt/lfrc ~/.config/lf/
 	 mkdir -p ~/.config/mimi
-	 cp -rv $WIDIR/xt/mimi.conf ~/.config/mimi/
+	 cp -rv $WIDIR/.xt/mimi.conf ~/.config/mimi/
 	 mkdir -p ~/.local/bin
-	 cp -rv $WIDIR/xt/foxtag ~/.local/bin/
-	 cp -rv $WIDIR/xt/wiconv ~/.local/bin/
-	 cp -rv $WIDIR/xt/slmenu ~/.local/bin/
-	 cp -rv $WIDIR/xt/slmenu ~/.local/bin/
+	 cp -rv $WIDIR/.xt/foxtag ~/.local/bin/
+	 cp -rv $WIDIR/.xt/wiconv ~/.local/bin/
+	 cp -rv $WIDIR/.xt/slmenu ~/.local/bin/
+	 cp -rv $WIDIR/.xt/slmenu ~/.local/bin/
 	 cd $WIDIR/src
+	 cp -rv production.h config.h
          sudo make clean install
 	 cd $WIDIR
          ;;
