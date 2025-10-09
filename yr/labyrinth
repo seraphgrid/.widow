@@ -139,6 +139,7 @@ case "$1" in
 
     -e)
         labyrtool -e $LABYRDIR/$(cat $MODE_FILE) 
+	labyrinth -i
         ;;
 
     -H)
