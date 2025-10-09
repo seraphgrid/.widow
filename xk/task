@@ -1,124 +1,17 @@
-# labyrinth 
-i 
- sh ~/labyrinth -i
-
-$
- sh ~/labyrinth -s
-
-V 
- sh ~/labyrinth -V
-
-alt + n
- sh ~/labyrinth -i 
-
-n
- sh ~/labyrinth -n
-
-a
- sh ~/labyrinth -a 
-    
-I
- sh ~/labyrinth -I 
-
 Escape
- sh ~/labyrinth -v 
+ labyrinth -v 
 
-d
- sh ~/labyrinth -d 
+p
+ labyrinth -I && zathura
 
-# dwm
-ctrl + {1,2,3,4,5,6,7,8,9} 
- dwmc setlayoutex {1,2,3,4,5,6,7,8,9}
+T
+ localsend
 
-m ; {1-9} 
- dwmc tagex {0-9}
+space
+ labyrinth -I && labyrtool -E "ncdu"
 
-M
- dwmc togglemax
+c
+ labyrtool -E "bc -l"
 
-{1-9} 
- dwmc view {0-9}
-
-{j,k}
- dwmc focusstack {+,-}1
-
-{J,K}
- dwmc {pushdown,pushup}
-
-# resize window left and right
-{h,l}
- dwmc setmfact {-,+}0.05
-
-Return
- dwmc zoom
-
-o
- alacritty
-
-W 
- dwmc togglebar
-
-# kill windows. pleae. 
-q
- dwmc killclient
-
-s
- redshift -O 3000
-
-S 
- redshift -x
-
-# warpd
-f
- warpd --hint
-
-v
- warpd --normal
-
-# tools
-u
- alacritty
- 
-e
- alacritty -e nvim 
-
-# Menus
-
-Tab 
- rofi -show window
- 
-alt + F1
- rofi -show drun
-
-ctrl + space
- rofi -show drun
-
-F
- alacritty -e ranger
-
-e
- alacritty -e nvim
-
-E
- thunderbird
-
-b
- qutebrowser
- 
-B
- torbrowser-launcher
-
-c  
- vesktop
-
-g
- gparted
-
-N
- alacritty -e newsboat
-    	
-backslash ; {1-8} 
- alacritty -e nvim ~/.config/sxhkd/{vim,ins,audio,system,network,debug}
-
-shift + slash
- alacritty -e nvim ~/.config/sxhkd/task
+m
+ labyrtool -E "aerc"
