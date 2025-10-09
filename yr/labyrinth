@@ -1,6 +1,7 @@
 #!/bin/bash
+
 LABYRDIR="$HOME/.config/sxhkd"
-VIM_MODE="$LABYRDIR/vim"     
+VIM_MODE="$LABYRDIR/normal"     
 MODE_FILE="$LABYRDIR/current_mode" 
 DEBUG_MODE="$LABYRDIR/debug"
 SECURITY_MODE="$LABYRDIR/security"
@@ -12,19 +13,13 @@ GAME_MODE="$LABYRDIR/game"
 TASK_MODE="$LABYRDIR/task"
 INSERT_MODE="$LABYRDIR/ins"
 CONFIG_MODE="$LABYRDIR/config"
-VIM_INS="$LABYRDIR/vi"
+VIM_INS="$LABYRDIR/ins"
 
 restart_sxhkd() {
     local config_file="$1"
-    killall sxhkd &
-    dunst &
-
-    sleep 0.1 &
-    
-    sxhkd -c "$config_file" &
-
+    pkill sxhkd 
+    sxhkd -c "$config_file" & 
 }
-
 
 toggle_mode() {
 
@@ -62,7 +57,7 @@ case "$1" in
         restart_sxhkd "$VIM_MODE" 
         CURRENT_MODE='vim' 
         echo "normal" > "$MODE_FILE" 
-        notify-send "NORMAL" 
+        #notify-send "NORMAL" 
         ;;
 
     -i)
@@ -70,7 +65,7 @@ case "$1" in
         restart_sxhkd "$INSERT_MODE" 
         CURRENT_MODE='ins' 
         echo "ins" > "$MODE_FILE" 
-        notify-send "INS" 
+        #notify-send "INS" 
         ;;
 
     -I)
@@ -78,7 +73,7 @@ case "$1" in
         restart_sxhkd "$VIM_INS" 
         CURRENT_MODE='vi' 
         echo "vi" > "$MODE_FILE" 
-        notify-send "VI" 
+        #notify-send "VI" 
         ;;
 
     -V)
@@ -86,7 +81,7 @@ case "$1" in
         restart_sxhkd "$VIDEO_MODE"  
         CURRENT_MODE='video' 
         echo "video" > "$MODE_FILE" 
-        notify-send "A/[V]" 
+        #notify-send "A/[V]" 
      	;;
 
     -a) 
@@ -94,7 +89,7 @@ case "$1" in
         restart_sxhkd "$AUDIO_MODE" 
         CURRENT_MODE='audio' 
         echo "audio" > "$MODE_FILE" 
-        notify-send "[A]/V" 
+        #notify-send "[A]/V" 
      	;;
 
     -d)
@@ -102,7 +97,7 @@ case "$1" in
         restart_sxhkd "$DEBUG_MODE" 
         CURRENT_MODE='debug' 
         echo "debug" > "$MODE_FILE" 
-        notify-send "DEBUG" 
+        #notify-send "DEBUG" 
      	;;
     
     -t)
@@ -110,7 +105,7 @@ case "$1" in
         restart_sxhkd "$TASK_MODE" 
         CURRENT_MODE='task' 
         echo "task" > "$MODE_FILE" 
-        notify-send "TASK" 
+        #notify-send "TASK" 
      	;;
     
     -n) 
@@ -118,28 +113,28 @@ case "$1" in
         restart_sxhkd "$NETWORK_MODE" 
         CURRENT_MODE='network' 
         echo "network" > "$MODE_FILE" 
-        notify-send "NETWORK" 
+        #notify-send "NETWORK" 
 	;;
 
     -y) 
         restart_sxhkd "$SECURITY_MODE" 
         CURRENT_MODE='security' 
         echo "security" > "$MODE_FILE" 
-        notify-send "SECURITY" 
+        #notify-send "SECURITY" 
 	;;
 
     -s) 
         restart_sxhkd "$SYSTEM_MODE" 
         CURRENT_MODE='system' 
         echo "system" > "$MODE_FILE" 
-        notify-send "SYSTEM" 
+        #notify-send "SYSTEM" 
 	;;
 
     -c) 
         restart_sxhkd "$CONFIG_MODE" 
         CURRENT_MODE='config' 
         echo "config" > "$MODE_FILE"  
-        notify-send "CONFIG" 
+        #notify-send "CONFIG" 
 	;;
 
     -e)
