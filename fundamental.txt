@@ -1,0 +1,30 @@
+[what_people_do_on_their_computer]
+
+[] Create Manim animation (none)
+[] open pdf (none) 
+[] redact screenshot (none, but will leverage gimp) 
+[] create new web app (none, fuck)
+[] crop image (none, but will leverage gimp) 
+[] modify mouse cursor (dont know why i have to handhold here but fuck it) 
+
+[x] Take a Screenshot (z ; f/F)
+[x] Install a game (!)
+[x] Play game (w for start menu) 
+[x] install browser (!) 
+[x] fix audio (o ; a/A) 
+[x] access clipboard history (z ; p)
+[x] use emoji (.) 
+[x] open text editor (I)
+
+
+
+[tmux]
+
+[x] new pane (C-a ; h/H) 
+[x] view windows (C-a ; w)
+
+[] copy text to clipboard
+[] paste text to cmdline
+[] resize pane
+[] configure tmux itself
+ 
