@@ -16,8 +16,6 @@
 [x] use emoji (.) 
 [x] open text editor (I)
 
-
-
 [tmux]
 
 [x] new pane (C-a ; h/H) 
