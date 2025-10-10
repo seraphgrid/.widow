@@ -9,6 +9,7 @@
 [x] Install a game (!)
 [x] Play game (w for start menu) 
 [x] install browser (!) 
+[x] open browser (o ; b in Normal Mode) 
 [x] fix audio (o ; a/A) 
 [x] access clipboard history (z ; p) (need better clipboard manager for X11) 
 [x] use emoji (.)  
