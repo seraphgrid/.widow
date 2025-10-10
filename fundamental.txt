@@ -6,16 +6,16 @@
 [] crop image (none, but will leverage gimp) 
 
 [x] Take a Screenshot (z ; f/F)
-[x] Install a game (!)
-[x] Play game (w for start menu) 
-[x] install browser (!) 
-[x] open browser (o ; b in Normal Mode) 
+[x] Install a game (! in Normal)
+[x] Play game (w for start menu in Normal) 
+[x] install browser (! in Normal) 
+[x] open browser (o ; b in Normal) 
 [x] fix audio (o ; a/A) 
-[x] access clipboard history (z ; p) (need better clipboard manager for X11) 
-[x] use emoji (.)  
-[x] open text editor (I)
-[x] modify mouse cursor (M in Task Mode opens lxappearance) 
-[x] open pdf (p in Task Mode, leveraging dmenufm) 
+[x] access clipboard history (z ; p in Normal) (need better clipboard manager for X11) 
+[x] use emoji (. in Normal)  
+[x] open text editor (I in Normal)
+[x] modify mouse cursor (M in Task opens lxappearance) 
+[x] open pdf (p in Task, leveraging dmenufm) 
 
 [tmux]
 
