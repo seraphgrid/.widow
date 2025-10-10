@@ -1,7 +1,7 @@
 [what_people_do_on_their_computer]
 
 [] Create Manim animation (none)
-[] open pdf (none, should maybe leverage fzf or something) 
+[x] open pdf (p in Task Mode, leveraging dmenufm) 
 [] redact screenshot (none, but will leverage gimp) 
 [] create new web app (none, fuck)
 [] crop image (none, but will leverage gimp) 
