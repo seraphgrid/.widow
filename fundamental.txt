@@ -21,8 +21,8 @@
 [x] new pane (C-a ; t/T) 
 [x] view windows (C-a ; w)
 
-[x] copy text to clipboard
-[x] paste text to cmdline
-[x] resize pane
+[x] copy text to clipboard (C-a ; v enters copy mode, with the v button after the fact allowing selection)
+[x] paste text to cmdline (C-a ; p)
+[x] resize pane (C-a ; h/j/k/l)
 [] configure tmux itself
  
