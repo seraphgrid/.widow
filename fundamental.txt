@@ -1,11 +1,9 @@
 [what_people_do_on_their_computer]
 
 [] Create Manim animation (none)
-[x] open pdf (p in Task Mode, leveraging dmenufm) 
 [] redact screenshot (none, but will leverage gimp) 
 [] create new web app (none, fuck)
 [] crop image (none, but will leverage gimp) 
-[] modify mouse cursor (dont know why i have to handhold here but fuck it) 
 
 [x] Take a Screenshot (z ; f/F)
 [x] Install a game (!)
@@ -15,6 +13,8 @@
 [x] access clipboard history (z ; p) (need better clipboard manager for X11) 
 [x] use emoji (.)  
 [x] open text editor (I)
+[x] modify mouse cursor (M in Task Mode opens lxappearance) 
+[x] open pdf (p in Task Mode, leveraging dmenufm) 
 
 [tmux]
 
